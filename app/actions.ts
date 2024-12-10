@@ -4,7 +4,8 @@ import { Readability } from "@mozilla/readability";
 import { JSDOM } from "jsdom";
 import { ArticlePost } from "./types";
 import { revalidatePath } from "next/cache";
-import config from "./config";
+import { createClient } from "@/utils/supabase/server";
+import { generateSummary } from "@/lib/ai";
 
 export async function createArticleSummary(
   prevState: {
@@ -26,31 +27,27 @@ export async function createArticleSummary(
       throw new Error("Failed to parse article");
     }
 
-    const cleanContent = article.textContent
-      .replace(/\s+/g, " ") // Replace multiple whitespace characters with a single space
-      .trim(); // Trim leading and trailing whitespace
     const wordCount = article.textContent.trim().split(/\s+/).length;
+    const cleanContent = article.textContent.replace(/\s+/g, " ").trim();
+    const result = await generateSummary(cleanContent);
 
     const data: ArticlePost = {
       title: article.title,
       author: article.byline,
       content: cleanContent,
       word_count: wordCount,
+      summary: result.summary,
+      tags: result.tags,
       url,
     };
 
     console.log(data);
 
-    const backendResponse = await fetch(`${config.backendUrl}/summaries/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const supabase = await createClient();
+    const { error } = await supabase.from("article_summaries").insert(data);
 
-    if (!backendResponse.ok) {
-      throw new Error(`HTTP error! status: ${backendResponse.status}`);
+    if (error) {
+      throw new Error(`Supabase error: ${error.message}`);
     }
 
     revalidatePath("/");
@@ -63,12 +60,14 @@ export async function createArticleSummary(
 
 export async function deleteArticleSummary(id: number) {
   try {
-    const response = await fetch(`${config.backendUrl}/summaries/${id}`, {
-      method: "DELETE",
-    });
+    const supabase = await createClient();
+    const { error } = await supabase
+      .from("article_summaries")
+      .delete()
+      .eq("id", id);
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    if (error) {
+      throw new Error(`Supabase error: ${error.message}`);
     }
 
     revalidatePath("/");
@@ -81,16 +80,14 @@ export async function deleteArticleSummary(id: number) {
 
 export async function updateArticleReadStatus(id: number, isRead: boolean) {
   try {
-    const response = await fetch(`${config.backendUrl}/summaries/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ has_read: isRead }),
-    });
+    const supabase = await createClient();
+    const { error } = await supabase
+      .from("article_summaries")
+      .update({ has_read: isRead })
+      .eq("id", id);
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    if (error) {
+      throw new Error(`Supabase error: ${error.message}`);
     }
 
     revalidatePath("/");
@@ -103,16 +100,14 @@ export async function updateArticleReadStatus(id: number, isRead: boolean) {
 
 export async function updateArticleRating(id: number, rating: number) {
   try {
-    const response = await fetch(`${config.backendUrl}/summaries/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ rating }),
-    });
+    const supabase = await createClient();
+    const { error } = await supabase
+      .from("article_summaries")
+      .update({ rating })
+      .eq("id", id);
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    if (error) {
+      throw new Error(`Supabase error: ${error.message}`);
     }
 
     revalidatePath("/");

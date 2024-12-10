@@ -18,7 +18,7 @@ function SubmitButton() {
     <Button type="submit" disabled={pending}>
       {pending ? (
         <>
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          <Loader2 className="mr-1 h-4 w-4 animate-spin" />
           Loading
         </>
       ) : (

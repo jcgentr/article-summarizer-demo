@@ -16,6 +16,8 @@ export interface Article {
 export interface ArticlePost {
   url: string;
   content: string;
+  summary: string;
+  tags: string;
   author: string;
   title: string;
   word_count: number;

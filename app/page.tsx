@@ -1,18 +1,15 @@
+import { createClient } from "@/utils/supabase/server";
 import { AddForm } from "./AddForm";
 import { ArticleCard } from "./ArticleCard";
-import config from "./config";
 import { Article } from "./types";
 
 export default async function Home() {
-  const response = await fetch(
-    `${config.backendUrl}/summaries/?offset=0&limit=100`
-  );
+  const supabase = await createClient();
+  const { data: article_summaries } = await supabase
+    .from("article_summaries")
+    .select();
 
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-
-  const articles: Article[] = await response.json();
+  const articles: Article[] = article_summaries ?? [];
 
   const sortedArticles = articles.sort((a, b) => {
     return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();

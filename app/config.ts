@@ -1,5 +1,7 @@
 type Config = {
-  backendUrl: string | undefined;
+  supabaseUrl: string;
+  supabaseAnonKey: string;
+  anthropicApiKey: string;
   // Add other config variables here
 };
 
@@ -12,7 +14,9 @@ function validateConfig(config: Config): asserts config is Config {
 }
 
 const config = {
-  backendUrl: process.env.BACKEND_URL,
+  supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  supabaseAnonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  anthropicApiKey: process.env.ANTHROPIC_API_KEY!,
   // Add other config variables here
 };
 

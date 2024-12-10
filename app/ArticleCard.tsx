@@ -59,7 +59,7 @@ export function ArticleCard({
             <LinkIcon className="h-4 w-4 mr-1 flex-shrink-0" />
             Read full article
           </a>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 justify-end">
             <AnimatePresence>
               {has_read && (
                 <motion.div
