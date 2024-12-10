@@ -15,16 +15,18 @@ function SubmitButton() {
   const { pending } = useFormStatus();
 
   return (
-    <Button type="submit" disabled={pending}>
-      {pending ? (
-        <>
-          <Loader2 className="mr-1 h-4 w-4 animate-spin" />
-          Loading
-        </>
-      ) : (
-        "Summarize"
-      )}
-    </Button>
+    <div>
+      <Button type="submit" disabled={pending} className="w-28">
+        {pending ? (
+          <>
+            <Loader2 className="h-4 w-4 animate-spin" />
+            Loading
+          </>
+        ) : (
+          "Summarize"
+        )}
+      </Button>
+    </div>
   );
 }
 
