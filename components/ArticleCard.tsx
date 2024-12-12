@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DeleteButton } from "./DeleteButton";
 import { ReadCheckbox } from "./ReadCheckbox";
-import { Article } from "./types";
+import { Article } from "../app/(protected)/types";
 import { Rating } from "./Rating";
 import * as motion from "motion/react-client";
 import { AnimatePresence } from "motion/react";

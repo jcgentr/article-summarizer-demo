@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Star } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { updateArticleRating } from "./actions";
+import { updateArticleRating } from "../app/(protected)/actions";
 
 interface RatingProps {
   id: number;

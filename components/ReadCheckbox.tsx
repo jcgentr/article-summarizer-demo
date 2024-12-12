@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
-import { updateArticleReadStatus } from "./actions";
+import { updateArticleReadStatus } from "../app/(protected)/actions";
+import { Label } from "./ui/label";
 
 interface ReadCheckboxProps {
   id: number;
@@ -30,9 +31,9 @@ export function ReadCheckbox({ id, initialReadStatus }: ReadCheckboxProps) {
         checked={isRead}
         onCheckedChange={handleChange}
       />
-      <label htmlFor={`read-${id}`} className="text-sm">
+      <Label htmlFor={`read-${id}`} className="text-sm">
         Read
-      </label>
+      </Label>
     </div>
   );
 }

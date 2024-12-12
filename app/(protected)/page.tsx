@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
-import { AddForm } from "./AddForm";
-import { ArticleCard } from "./ArticleCard";
+import { AddForm } from "../../components/AddForm";
+import { ArticleCard } from "../../components/ArticleCard";
 import { Article } from "./types";
 
 export const maxDuration = 60; // Applies to the server actions

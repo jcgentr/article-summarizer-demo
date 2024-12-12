@@ -6,6 +6,7 @@ import { ArticlePost } from "./types";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/utils/supabase/server";
 import { generateSummary } from "@/lib/ai";
+import { redirect } from "next/navigation";
 
 export async function createArticleSummary(
   prevState: {
@@ -116,4 +117,17 @@ export async function updateArticleRating(id: number, rating: number) {
     console.error(error);
     throw new Error("Failed to update article rating");
   }
+}
+
+export async function logout() {
+  const supabase = await createClient();
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    console.error("Error logging out:", error);
+    throw new Error("Failed to log out");
+  }
+
+  revalidatePath("/");
+  redirect("/login");
 }

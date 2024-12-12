@@ -14,7 +14,9 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Article Summarizer",
+  title: `Article Summarizer${
+    process.env.NODE_ENV === "development" ? " | Dev" : ""
+  }`,
   description: "Summarize web articles",
 };
 
