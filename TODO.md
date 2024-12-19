@@ -4,7 +4,6 @@
 - [ ] build tables and data analytics for articles
 - [ ] limit how long the article can be
 - [ ] add OG image next to title
-- [ ] add search
 - [ ] add filters
 - [ ] add print button
 - [ ] be able to configure summarization
@@ -15,7 +14,11 @@
 - [ ] improve loading loads of summaries if necessary
 - [ ] improve login and signup flow (verify email not intuitive)
 - [ ] improve author parsing
+- [ ] show tags
+- [ ] search by tags
+- [ ] theme switcher
 
+- [x] add basic client-side search
 - [x] add user accounts and hook up to summaries
 - [x] deploy on Vercel and Supabase
 - [x] add ability to rate article after reading (1-5 stars)
@@ -29,17 +32,20 @@
 
 ## Database Schema
 
-| Column     | Type     | Description          |
-| ---------- | -------- | -------------------- |
-| id         | integer  | Primary key          |
-| url        | string   | Article URL          |
-| content    | text     | Full article content |
-| summary    | text     | AI-generated summary |
-| tags       | string[] | Article categories   |
-| author     | string   | Article author       |
-| title      | string   | Article title        |
-| word_count | integer  | Total word count     |
-| has_read   | boolean  | Read status          |
-| rating     | integer  | User rating (0-5)    |
+| Column     | Type      | Description                      |
+| ---------- | --------- | -------------------------------- |
+| id         | integer   | Primary key                      |
+| url        | string    | Article URL                      |
+| content    | text      | Full article content             |
+| summary    | text      | AI-generated summary             |
+| tags       | string[]  | Article categories               |
+| author     | string    | Article author                   |
+| title      | string    | Article title                    |
+| word_count | integer   | Total word count                 |
+| has_read   | boolean   | Read status                      |
+| rating     | integer   | User rating (0-5)                |
+| created_at | timestamp | When the record was created      |
+| updated_at | timestamp | When the record was last updated |
+| user_id    | uuid      | Foreign key to users table       |
 
 # The Goodreads for web articles?
