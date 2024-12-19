@@ -50,8 +50,6 @@ export async function createArticleSummary(
       url,
     };
 
-    console.log(data);
-
     const { error } = await supabase
       .from("article_summaries")
       .insert({ ...data, user_id: user.id });

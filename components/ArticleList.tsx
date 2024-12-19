@@ -1,10 +1,12 @@
 "use client";
 
 import { Article } from "@/app/(protected)/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { ArrowUp } from "lucide-react";
 import { AddForm } from "./AddForm";
 import { ArticleCard } from "./ArticleCard";
 import { Input } from "./ui/input";
+import { Button } from "./ui/button";
 
 export function ArticleList({
   initialArticles,
@@ -12,6 +14,7 @@ export function ArticleList({
   initialArticles: Article[];
 }) {
   const [searchTerm, setSearchTerm] = useState("");
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   const filteredArticles = initialArticles.filter((article) => {
     const searchLower = searchTerm.toLowerCase();
@@ -20,6 +23,20 @@ export function ArticleList({
       article.author?.toLowerCase().includes(searchLower)
     );
   });
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show button when user scrolls down 400px
+      setShowScrollTop(window.scrollY > 400);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <>
@@ -39,6 +56,7 @@ export function ArticleList({
           </div>
         </div>
       </div>
+
       <ul className="flex flex-col gap-4 mb-8">
         {filteredArticles.map((article) => (
           <li key={article.id}>
@@ -46,6 +64,17 @@ export function ArticleList({
           </li>
         ))}
       </ul>
+
+      {showScrollTop && (
+        <Button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-4 md:bottom-12 md:right-16 rounded-full p-3 h-auto"
+          size="icon"
+          aria-label="Scroll to top"
+        >
+          <ArrowUp className="h-4 w-4" />
+        </Button>
+      )}
     </>
   );
 }

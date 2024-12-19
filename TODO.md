@@ -1,4 +1,4 @@
-- [ ] if summary already exists for url, prevent recreating or allow for updating
+- [ ] if summary already exists for url, return existing db summary
 - [ ] be able to chat with AI about article (may evolve to RAG)
 - [ ] determine if the url is readable
 - [ ] build tables and data analytics for articles
@@ -9,15 +9,16 @@
 - [ ] be able to configure summarization
 - [ ] develop chrome extension for saving
 - [ ] make summaries expandable
-- [ ] scroll to top button
 - [ ] read progress bar on side
 - [ ] improve loading loads of summaries if necessary
 - [ ] improve login and signup flow (verify email not intuitive)
 - [ ] improve author parsing
 - [ ] show tags
 - [ ] search by tags
+
 - [ ] theme switcher
 
+- [x] scroll to top button
 - [x] add basic client-side search
 - [x] add user accounts and hook up to summaries
 - [x] deploy on Vercel and Supabase
