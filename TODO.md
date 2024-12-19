@@ -3,7 +3,21 @@
 - [ ] determine if the url is readable
 - [ ] build tables and data analytics for articles
 - [ ] limit how long the article can be
-- [ ] deploy on Vercel and Supabase
+- [ ] add OG image next to title
+- [ ] add search
+- [ ] add filters
+- [ ] add print button
+- [ ] be able to configure summarization
+- [ ] develop chrome extension for saving
+- [ ] make summaries expandable
+- [ ] scroll to top button
+- [ ] read progress bar on side
+- [ ] improve loading loads of summaries if necessary
+- [ ] improve login and signup flow (verify email not intuitive)
+- [ ] improve author parsing
+
+- [x] add user accounts and hook up to summaries
+- [x] deploy on Vercel and Supabase
 - [x] add ability to rate article after reading (1-5 stars)
 - [x] switch from FastAPI and sqlite to next.js and supabase
 - [x] deploy on fly.io

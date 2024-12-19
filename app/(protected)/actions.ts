@@ -14,9 +14,17 @@ export async function createArticleSummary(
   },
   formData: FormData
 ) {
-  const url = formData.get("url") as string;
-
   try {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      throw new Error("User must be logged in to create summaries");
+    }
+
+    const url = formData.get("url") as string;
     const response = await fetch(url);
     const html = await response.text();
 
@@ -44,8 +52,9 @@ export async function createArticleSummary(
 
     console.log(data);
 
-    const supabase = await createClient();
-    const { error } = await supabase.from("article_summaries").insert(data);
+    const { error } = await supabase
+      .from("article_summaries")
+      .insert({ ...data, user_id: user.id });
 
     if (error) {
       throw new Error(`Supabase error: ${error.message}`);

@@ -9,13 +9,10 @@ export default async function Home() {
   const supabase = await createClient();
   const { data: article_summaries } = await supabase
     .from("article_summaries")
-    .select();
+    .select() // RLS will automatically filter to current user's summaries
+    .order("created_at", { ascending: false });
 
   const articles: Article[] = article_summaries ?? [];
-
-  const sortedArticles = articles.sort((a, b) => {
-    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-  });
 
   return (
     <main className="max-w-2xl mx-auto px-4">
@@ -24,7 +21,7 @@ export default async function Home() {
         <AddForm />
       </div>
       <ul className="flex flex-col gap-4 mb-8">
-        {sortedArticles.map((article) => (
+        {articles.map((article) => (
           <li key={article.id}>
             <ArticleCard {...article} />
           </li>
