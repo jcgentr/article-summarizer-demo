@@ -46,7 +46,7 @@ export function ArticleList({
         <div className="flex mt-4 gap-3 items-baseline">
           <Input
             type="search"
-            placeholder="Search articles by title or author..."
+            placeholder="Search articles by title, author, or tag..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full"

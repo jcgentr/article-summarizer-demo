@@ -25,16 +25,15 @@ export function ArticleCard({
   const read_time = Math.ceil(word_count / 238); // Assuming 238 words per minute reading speed for adults reading non-fiction
 
   const formattedTags = tags.split(",").map((tag, index, array) => (
-    <>
+    <span key={index}>
       <span
-        key={index}
         onClick={() => handleTagClick(tag.trim())}
         className="cursor-pointer hover:underline"
       >
         #{tag.trim()}
       </span>
       {index !== array.length - 1 && <span>, </span>}
-    </>
+    </span>
   ));
 
   return (

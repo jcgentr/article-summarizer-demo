@@ -1,16 +1,12 @@
-- [ ] if summary already exists for url, return existing db summary
-  - but what about updated blogs? hash content?
-  - if user deletes summary, should we actually delete it from db?
 - [ ] be able to chat with AI about article (may evolve to RAG)
-- [ ] determine if the url is readable
 - [ ] build tables and data analytics for articles
-- [ ] limit how long the article can be
 - [ ] add OG image next to title
 - [ ] add filters
 - [ ] add print button
 - [ ] be able to configure summarization
 - [ ] develop chrome extension for saving
 - [ ] make summaries expandable
+- [ ] make tags expandable
 - [ ] read progress bar on side
 - [ ] improve loading loads of summaries if necessary
 - [ ] improve login and signup flow (verify email not intuitive)
@@ -22,6 +18,14 @@
 - [ ] most popular articles leaderboard based on all users saved summaries
 - [ ] top rated articles leaderboard
 
+- [ ] limit how long the article can be
+- [ ] determine if the url is readable
+- [ ] if summary already exists for url, return existing db summary
+
+  - but what about updated blogs? hash content?
+  - if user deletes summary, should we actually delete it from db?
+
+- [x] add toasts
 - [x] show tags
 - [x] search by tags
 - [x] theme switcher

@@ -1,11 +1,12 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { useFormStatus } from "react-dom";
 import { createArticleSummary } from "../app/(protected)/actions";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 const initialState = {
   message: "",
@@ -51,6 +52,16 @@ export function AddForm() {
     initialState
   );
 
+  useEffect(() => {
+    if (state.message) {
+      if (state.message.startsWith("Failed")) {
+        toast.error(state.message);
+      } else {
+        toast.success(state.message);
+      }
+    }
+  }, [state]);
+
   return (
     <form action={formAction}>
       <div className="flex gap-2">
@@ -58,7 +69,7 @@ export function AddForm() {
         <SubmitButton />
       </div>
       <p aria-live="polite" className="sr-only" role="status">
-        {state?.message}
+        {state.message}
       </p>
     </form>
   );
