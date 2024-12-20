@@ -1,4 +1,5 @@
 - [ ] if summary already exists for url, return existing db summary
+  - but what about updated blogs? hash content?
 - [ ] be able to chat with AI about article (may evolve to RAG)
 - [ ] determine if the url is readable
 - [ ] build tables and data analytics for articles
@@ -16,8 +17,7 @@
 - [ ] show tags
 - [ ] search by tags
 
-- [ ] theme switcher
-
+- [x] theme switcher
 - [x] scroll to top button
 - [x] add basic client-side search
 - [x] add user accounts and hook up to summaries
