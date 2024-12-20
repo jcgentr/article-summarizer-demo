@@ -17,13 +17,39 @@ export function ArticleCard({
   url,
   has_read,
   rating,
-}: Article) {
+  tags,
+  handleTagClick,
+}: Article & {
+  handleTagClick: (tag: string) => void;
+}) {
   const read_time = Math.ceil(word_count / 238); // Assuming 238 words per minute reading speed for adults reading non-fiction
+
+  const formattedTags = tags.split(",").map((tag, index, array) => (
+    <>
+      <span
+        key={index}
+        onClick={() => handleTagClick(tag.trim())}
+        className="cursor-pointer hover:underline"
+      >
+        #{tag.trim()}
+      </span>
+      {index !== array.length - 1 && <span>, </span>}
+    </>
+  ));
 
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold">{title}</CardTitle>
+        <CardTitle className="text-2xl font-bold">
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline"
+          >
+            {title}
+          </a>
+        </CardTitle>
         {author && (
           <p className="pt-2 text-sm text-muted-foreground flex items-center gap-1">
             <User className="h-4 w-4" />
@@ -76,6 +102,7 @@ export function ArticleCard({
             <DeleteButton id={id} />
           </div>
         </div>
+        <div className="text-muted-foreground">{formattedTags}</div>
       </CardContent>
     </Card>
   );

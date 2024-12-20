@@ -20,7 +20,8 @@ export function ArticleList({
     const searchLower = searchTerm.toLowerCase();
     return (
       article.title?.toLowerCase().includes(searchLower) ||
-      article.author?.toLowerCase().includes(searchLower)
+      article.author?.toLowerCase().includes(searchLower) ||
+      article.tags?.toLowerCase().includes(searchLower)
     );
   });
 
@@ -60,7 +61,10 @@ export function ArticleList({
       <ul className="flex flex-col gap-4 mb-8">
         {filteredArticles.map((article) => (
           <li key={article.id}>
-            <ArticleCard {...article} />
+            <ArticleCard
+              {...article}
+              handleTagClick={(tag: string) => setSearchTerm(tag)}
+            />
           </li>
         ))}
       </ul>
