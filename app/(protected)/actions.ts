@@ -38,7 +38,7 @@ export async function createArticleSummary(
 
     const wordCount = article.textContent.trim().split(/\s+/).length;
     const cleanContent = article.textContent.replace(/\s+/g, " ").trim();
-    const result = await generateSummary(cleanContent);
+    const result = await generateSummary(cleanContent, wordCount);
 
     const data: ArticlePost = {
       title: article.title,

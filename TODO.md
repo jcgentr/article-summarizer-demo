@@ -18,13 +18,12 @@
 - [ ] most popular articles leaderboard based on all users saved summaries
 - [ ] top rated articles leaderboard
 
-- [ ] limit how long the article can be
-- [ ] determine if the url is readable
 - [ ] if summary already exists for url, return existing db summary
 
   - but what about updated blogs? hash content?
   - if user deletes summary, should we actually delete it from db?
 
+- [x] limit how long the article can be
 - [x] add toasts
 - [x] show tags
 - [x] search by tags

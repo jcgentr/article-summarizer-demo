@@ -1,7 +1,18 @@
 import Anthropic from "@anthropic-ai/sdk";
 import config from "@/app/config";
 
-export async function generateSummary(content: string) {
+const TOKEN_LIMIT = 50000; // ~37,500 words
+
+export async function generateSummary(content: string, wordCount: number) {
+  // Rough token estimation (1 token ≈ 0.75 words)
+  const estimatedTokens = Math.ceil(wordCount / 0.75);
+
+  if (estimatedTokens > TOKEN_LIMIT) {
+    throw new Error(
+      `Content is too long (estimated ${estimatedTokens} tokens). Maximum allowed is ${TOKEN_LIMIT} tokens.`
+    );
+  }
+
   const client = new Anthropic({
     apiKey: config.anthropicApiKey,
   });
@@ -28,7 +39,7 @@ export async function generateSummary(content: string) {
   try {
     const message = await client.messages.create({
       model: "claude-3-5-sonnet-20241022",
-      max_tokens: 1000,
+      max_tokens: 500,
       temperature: 0,
       system:
         "You are a professional summarizer. Provide clear, concise summaries while maintaining key information.",
