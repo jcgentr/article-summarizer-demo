@@ -4,9 +4,10 @@ import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { updateArticleReadStatus } from "../app/(protected)/actions";
 import { Label } from "./ui/label";
+import { toast } from "sonner";
 
 interface ReadCheckboxProps {
-  id: number;
+  id: string;
   initialReadStatus: boolean;
 }
 
@@ -16,9 +17,11 @@ export function ReadCheckbox({ id, initialReadStatus }: ReadCheckboxProps) {
   const handleChange = async (checked: boolean) => {
     setIsRead(checked);
     try {
-      await updateArticleReadStatus(id, checked);
+      const { message } = await updateArticleReadStatus(id, checked);
+      toast.success(message);
     } catch (error) {
       console.error("Failed to update read status:", error);
+      toast.error("Failed to update read status");
       setIsRead(!checked); // Revert the state if the update fails
     }
   };

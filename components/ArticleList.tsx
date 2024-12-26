@@ -19,9 +19,10 @@ export function ArticleList({
   const filteredArticles = initialArticles.filter((article) => {
     const searchLower = searchTerm.toLowerCase();
     return (
-      article.title?.toLowerCase().includes(searchLower) ||
+      article.title.toLowerCase().includes(searchLower) ||
       article.author?.toLowerCase().includes(searchLower) ||
-      article.tags?.toLowerCase().includes(searchLower)
+      article.tags?.toLowerCase().includes(searchLower) ||
+      article.url.toLowerCase().includes(searchLower)
     );
   });
 
@@ -46,7 +47,7 @@ export function ArticleList({
         <div className="flex mt-4 gap-3 items-baseline">
           <Input
             type="search"
-            placeholder="Search articles by title, author, or tag..."
+            placeholder="URL, title, author, or tags..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full"

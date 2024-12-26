@@ -4,7 +4,6 @@ import { User } from "@supabase/supabase-js";
 import { ModeToggle } from "./ModeToggle";
 
 export default async function NavBar({ user }: { user: User }) {
-  console.log(user);
   return (
     <nav className="w-full border-b">
       <div className="flex h-16 items-center gap-4 justify-end mr-4">

@@ -1,10 +1,7 @@
 - [ ] be able to chat with AI about article (may evolve to RAG)
 - [ ] build tables and data analytics for articles
-- [ ] add OG image next to title
-- [ ] add filters
 - [ ] add print button
 - [ ] be able to configure summarization
-- [ ] develop chrome extension for saving
 - [ ] make summaries expandable
 - [ ] make tags expandable
 - [ ] read progress bar on side
@@ -17,12 +14,13 @@
 - [ ] show favorite tab or filter
 - [ ] most popular articles leaderboard based on all users saved summaries
 - [ ] top rated articles leaderboard
+- [ ] update existing article on create if hash of content has changed
+- [ ] add filters
+- [ ] add OG image next to title
+- [ ] develop chrome extension for saving
+- [ ] calculate claude expense
 
-- [ ] if summary already exists for url, return existing db summary
-
-  - but what about updated blogs? hash content?
-  - if user deletes summary, should we actually delete it from db?
-
+- [x] if summary already exists for url, return existing db summary
 - [x] limit how long the article can be
 - [x] add toasts
 - [x] show tags
@@ -43,20 +41,35 @@
 
 ## Database Schema
 
-| Column     | Type      | Description                      |
-| ---------- | --------- | -------------------------------- |
-| id         | integer   | Primary key                      |
-| url        | string    | Article URL                      |
-| content    | text      | Full article content             |
-| summary    | text      | AI-generated summary             |
-| tags       | string[]  | Article categories               |
-| author     | string    | Article author                   |
-| title      | string    | Article title                    |
-| word_count | integer   | Total word count                 |
-| has_read   | boolean   | Read status                      |
-| rating     | integer   | User rating (0-5)                |
-| created_at | timestamp | When the record was created      |
-| updated_at | timestamp | When the record was last updated |
-| user_id    | uuid      | Foreign key to users table       |
+### Articles Table
+
+| Column     | Type                     | Description                      |
+| ---------- | ------------------------ | -------------------------------- |
+| id         | uuid                     | Primary key                      |
+| url        | text                     | Article URL (unique)             |
+| content    | text                     | Full article content             |
+| summary    | text                     | AI-generated summary             |
+| tags       | text                     | Article categories               |
+| author     | text                     | Article author                   |
+| title      | text                     | Article title                    |
+| word_count | integer                  | Total word count                 |
+| created_at | timestamp with time zone | When the record was created      |
+| updated_at | timestamp with time zone | When the record was last updated |
+
+### User Articles Table
+
+| Column      | Type                     | Description                      |
+| ----------- | ------------------------ | -------------------------------- |
+| id          | uuid                     | Primary key                      |
+| user_id     | uuid                     | Foreign key to auth.users table  |
+| article_id  | uuid                     | Foreign key to articles table    |
+| has_read    | boolean                  | Read status                      |
+| rating      | integer                  | User rating (1-5)                |
+| is_archived | boolean                  | Whether the article is archived  |
+| is_favorite | boolean                  | Whether the article is favorited |
+| created_at  | timestamp with time zone | When the record was created      |
+| updated_at  | timestamp with time zone | When the record was last updated |
+
+Note: The user_id and article_id combination is unique in the user_articles table.
 
 # The Goodreads for web articles?

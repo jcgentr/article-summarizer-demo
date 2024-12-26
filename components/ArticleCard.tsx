@@ -24,7 +24,7 @@ export function ArticleCard({
 }) {
   const read_time = Math.ceil(word_count / 238); // Assuming 238 words per minute reading speed for adults reading non-fiction
 
-  const formattedTags = tags.split(",").map((tag, index, array) => (
+  const formattedTags = tags?.split(",").map((tag, index, array) => (
     <span key={index}>
       <span
         onClick={() => handleTagClick(tag.trim())}

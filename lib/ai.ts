@@ -3,7 +3,10 @@ import config from "@/app/config";
 
 const TOKEN_LIMIT = 50000; // ~37,500 words
 
-export async function generateSummary(content: string, wordCount: number) {
+export async function generateSummaryAndTags(
+  content: string,
+  wordCount: number
+) {
   // Rough token estimation (1 token ≈ 0.75 words)
   const estimatedTokens = Math.ceil(wordCount / 0.75);
 

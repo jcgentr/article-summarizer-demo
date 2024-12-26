@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import { Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { updateArticleRating } from "../app/(protected)/actions";
+import { toast } from "sonner";
 
 interface RatingProps {
-  id: number;
+  id: string;
   initialRating: number | null;
 }
 
@@ -26,9 +27,11 @@ export function Rating({ id, initialRating }: RatingProps) {
   const handleRatingChange = async (newRating: number) => {
     setRating(newRating);
     try {
-      await updateArticleRating(id, newRating);
+      const { message } = await updateArticleRating(id, newRating);
+      toast.success(message);
     } catch (error) {
       console.error("Failed to update rating:", error);
+      toast.error("Failed to update rating");
       setRating(initialRating); // Revert the state if the update fails
     }
   };

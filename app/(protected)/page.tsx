@@ -6,12 +6,42 @@ export const maxDuration = 60; // Applies to the server actions
 
 export default async function Home() {
   const supabase = await createClient();
-  const { data: article_summaries } = await supabase
-    .from("article_summaries")
-    .select() // RLS will automatically filter to current user's summaries
+
+  // Join user_articles with articles to get all user's saved articles
+  const { data: userArticles } = await supabase
+    .from("user_articles")
+    .select(
+      `
+    *,
+    article:articles (
+      id,
+      url,
+      title,
+      summary,
+      created_at,
+      updated_at,
+      tags,
+      author,
+      word_count
+    )
+  `
+    )
     .order("created_at", { ascending: false });
 
-  const articles: Article[] = article_summaries ?? [];
+  // Transform while maintaining existing Article type structure
+  const articles: Article[] = (userArticles ?? []).map((ua) => ({
+    id: ua.article.id,
+    url: ua.article.url,
+    title: ua.article.title,
+    summary: ua.article.summary,
+    created_at: ua.article.created_at,
+    updated_at: ua.article.updated_at,
+    tags: ua.article.tags,
+    author: ua.article.author,
+    has_read: ua.has_read,
+    rating: ua.rating,
+    word_count: ua.article.word_count,
+  }));
 
   return (
     <main className="max-w-2xl mx-auto px-4">
