@@ -7,6 +7,12 @@ import { Article } from "../app/(protected)/types";
 import { Rating } from "./Rating";
 import * as motion from "motion/react-client";
 import { AnimatePresence } from "motion/react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "./ui/accordion";
 
 export function ArticleCard({
   id,
@@ -57,7 +63,19 @@ export function ArticleCard({
         )}
       </CardHeader>
       <CardContent className="space-y-6">
-        <p className="text-muted-foreground">{summary}</p>
+        <Accordion type="single" collapsible defaultValue="item-1">
+          <AccordionItem value="item-1">
+            <AccordionTrigger className="text-base pt-0">
+              Summary
+            </AccordionTrigger>
+            <AccordionContent>
+              <p className="text-muted-foreground text-base leading-relaxed">
+                {summary}
+              </p>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+
         <div className="flex flex-wrap gap-3">
           <Badge
             variant="secondary"

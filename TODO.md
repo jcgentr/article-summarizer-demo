@@ -2,7 +2,6 @@
 - [ ] build tables and data analytics for articles
 - [ ] add print button
 - [ ] be able to configure summarization
-- [ ] make summaries expandable
 - [ ] make tags expandable
 - [ ] read progress bar on side
 - [ ] improve loading loads of summaries if necessary
@@ -20,6 +19,7 @@
 - [ ] develop chrome extension for saving
 - [ ] calculate claude expense
 
+- [x] make summaries expandable
 - [x] if summary already exists for url, return existing db summary
 - [x] limit how long the article can be
 - [x] add toasts
