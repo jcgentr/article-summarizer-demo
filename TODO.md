@@ -14,11 +14,16 @@
 - [ ] most popular articles leaderboard based on all users saved summaries
 - [ ] top rated articles leaderboard
 - [ ] update existing article on create if hash of content has changed
-- [ ] add filters
 - [ ] add OG image next to title
 - [ ] develop chrome extension for saving
 - [ ] calculate claude expense
+- [ ] add publish date
+- [ ] on title hover show preview of site
 
+- [ ] add filter for read vs unread
+- [ ] keyboard shortcut d to change theme
+
+- [x] add sort by shortest vs longest and newest vs oldest created_at
 - [x] make summaries expandable
 - [x] if summary already exists for url, return existing db summary
 - [x] limit how long the article can be

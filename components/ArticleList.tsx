@@ -1,12 +1,13 @@
 "use client";
 
 import { Article } from "@/app/(protected)/types";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowUp } from "lucide-react";
 import { AddForm } from "./AddForm";
 import { ArticleCard } from "./ArticleCard";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { SORT_OPTIONS, SortDropdown, SortOption } from "./SortDropdown";
 
 export function ArticleList({
   initialArticles,
@@ -15,16 +16,28 @@ export function ArticleList({
 }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [sortValue, setSortValue] = useState<SortOption>("Newest first");
 
-  const filteredArticles = initialArticles.filter((article) => {
-    const searchLower = searchTerm.toLowerCase();
-    return (
-      article.title.toLowerCase().includes(searchLower) ||
-      article.author?.toLowerCase().includes(searchLower) ||
-      article.tags?.toLowerCase().includes(searchLower) ||
-      article.url.toLowerCase().includes(searchLower)
-    );
-  });
+  // First filter
+  const filteredArticles = useMemo(
+    () =>
+      initialArticles.filter((article) => {
+        const searchLower = searchTerm.toLowerCase();
+        return (
+          article.title.toLowerCase().includes(searchLower) ||
+          article.author?.toLowerCase().includes(searchLower) ||
+          article.tags?.toLowerCase().includes(searchLower) ||
+          article.url.toLowerCase().includes(searchLower)
+        );
+      }),
+    [initialArticles, searchTerm]
+  );
+
+  // Then sort the filtered results
+  const sortedArticles = useMemo(
+    () => SORT_OPTIONS[sortValue](filteredArticles),
+    [filteredArticles, sortValue]
+  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,7 +55,7 @@ export function ArticleList({
 
   return (
     <>
-      <div className="sticky top-0 bg-background/80 backdrop-blur-sm z-10 py-8">
+      <div className="sticky top-0 bg-background/80 backdrop-blur-sm z-10 pt-8 pb-4">
         <AddForm />
         <div className="flex mt-4 gap-3 items-baseline">
           <Input
@@ -57,10 +70,13 @@ export function ArticleList({
             {filteredArticles.length === 1 ? "article" : "articles"}
           </div>
         </div>
+        <div className="mt-4">
+          <SortDropdown value={sortValue} onValueChange={setSortValue} />
+        </div>
       </div>
 
       <ul className="flex flex-col gap-4 mb-8">
-        {filteredArticles.map((article) => (
+        {sortedArticles.map((article) => (
           <li key={article.id}>
             <ArticleCard
               {...article}
