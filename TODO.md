@@ -21,8 +21,8 @@
 - [ ] on title hover show preview of site
 
 - [ ] add filter for read vs unread
-- [ ] keyboard shortcut d to change theme
 
+- [x] keyboard shortcut d to change theme
 - [x] add sort by shortest vs longest and newest vs oldest created_at
 - [x] make summaries expandable
 - [x] if summary already exists for url, return existing db summary

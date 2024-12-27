@@ -8,6 +8,7 @@ import { ArticleCard } from "./ArticleCard";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { SORT_OPTIONS, SortDropdown, SortOption } from "./SortDropdown";
+import { useThemeShortcut } from "@/lib/hooks/useThemeShortcut";
 
 export function ArticleList({
   initialArticles,
@@ -17,6 +18,8 @@ export function ArticleList({
   const [searchTerm, setSearchTerm] = useState("");
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [sortValue, setSortValue] = useState<SortOption>("Newest first");
+
+  useThemeShortcut();
 
   // First filter
   const filteredArticles = useMemo(
