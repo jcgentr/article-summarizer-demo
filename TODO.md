@@ -19,9 +19,9 @@
 - [ ] calculate claude expense
 - [ ] add publish date
 - [ ] on title hover show preview of site
+- [ ] add multi-filter capability
 
-- [ ] add filter for read vs unread
-
+- [x] add filter for read vs unread
 - [x] keyboard shortcut d to change theme
 - [x] add sort by shortest vs longest and newest vs oldest created_at
 - [x] make summaries expandable

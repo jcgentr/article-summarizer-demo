@@ -9,6 +9,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { SORT_OPTIONS, SortDropdown, SortOption } from "./SortDropdown";
 import { useThemeShortcut } from "@/lib/hooks/useThemeShortcut";
+import FilterDropdown, { FILTER_OPTIONS, FilterId } from "./FilterDropdown";
 
 export function ArticleList({
   initialArticles,
@@ -18,11 +19,12 @@ export function ArticleList({
   const [searchTerm, setSearchTerm] = useState("");
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [sortValue, setSortValue] = useState<SortOption>("Newest first");
+  const [selectedFilter, setSelectedFilter] = useState<FilterId>("none");
 
   useThemeShortcut();
 
   // First filter
-  const filteredArticles = useMemo(
+  const searchFilteredArticles = useMemo(
     () =>
       initialArticles.filter((article) => {
         const searchLower = searchTerm.toLowerCase();
@@ -36,7 +38,13 @@ export function ArticleList({
     [initialArticles, searchTerm]
   );
 
-  // Then sort the filtered results
+  // Then apply selected filter
+  const filteredArticles = useMemo(
+    () => FILTER_OPTIONS[selectedFilter].filter(searchFilteredArticles),
+    [searchFilteredArticles, selectedFilter]
+  );
+
+  // Finally sort the filtered results
   const sortedArticles = useMemo(
     () => SORT_OPTIONS[sortValue](filteredArticles),
     [filteredArticles, sortValue]
@@ -73,8 +81,12 @@ export function ArticleList({
             {filteredArticles.length === 1 ? "article" : "articles"}
           </div>
         </div>
-        <div className="mt-4">
+        <div className="mt-4 flex gap-3 flex-wrap">
           <SortDropdown value={sortValue} onValueChange={setSortValue} />
+          <FilterDropdown
+            value={selectedFilter}
+            onValueChange={setSelectedFilter}
+          />
         </div>
       </div>
 

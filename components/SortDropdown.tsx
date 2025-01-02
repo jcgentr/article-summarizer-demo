@@ -48,7 +48,7 @@ export function SortDropdown({ value, onValueChange }: SortDropdownProps) {
           <ChevronDown className="ml-2 h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" align="start">
+      <DropdownMenuContent className="w-48" align="start">
         <DropdownMenuGroup>
           <DropdownMenuLabel className="text-muted-foreground">
             Date added

@@ -41,6 +41,7 @@ export default async function Home() {
     has_read: ua.has_read,
     rating: ua.rating,
     word_count: ua.article.word_count,
+    read_time: Math.ceil(ua.article.word_count / 238), // Assuming 238 words per minute reading speed for adults reading non-fiction
   }));
 
   return (

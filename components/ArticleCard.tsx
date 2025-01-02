@@ -20,6 +20,7 @@ export function ArticleCard({
   author,
   summary,
   word_count,
+  read_time,
   url,
   has_read,
   rating,
@@ -28,8 +29,6 @@ export function ArticleCard({
 }: Article & {
   handleTagClick: (tag: string) => void;
 }) {
-  const read_time = Math.ceil(word_count / 238); // Assuming 238 words per minute reading speed for adults reading non-fiction
-
   const formattedTags = tags?.split(",").map((tag, index, array) => (
     <span key={index}>
       <span
