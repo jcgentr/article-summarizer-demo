@@ -1,6 +1,7 @@
 - [ ] be able to chat with AI about article (may evolve to RAG)
 - [ ] build tables and data analytics for articles
 - [ ] add print button
+- [ ] add feedback button and form
 - [ ] be able to configure summarization
 - [ ] make tags expandable
 - [ ] read progress bar on side
@@ -15,12 +16,14 @@
 - [ ] top rated articles leaderboard
 - [ ] update existing article on create if hash of content has changed
 - [ ] add OG image next to title
-- [ ] develop chrome extension for saving
-- [ ] calculate claude expense
 - [ ] add publish date
 - [ ] on title hover show preview of site
 - [ ] add multi-filter capability
+- [ ] change tag hashtags to badges
 
+- [ ] deploy chrome extension
+
+- [x] develop chrome extension for saving
 - [x] add filter for read vs unread
 - [x] keyboard shortcut d to change theme
 - [x] add sort by shortest vs longest and newest vs oldest created_at
@@ -41,6 +44,18 @@
 - [x] build simple frontend UI to connect this to
 - [x] convert this to a FastAPI app
 - [x] capture title and author if they exists
+
+# Pre-launch
+
+- [ ] form an LLC
+- [ ] decide on name, logo and branding
+- [ ] setup business bank account (Steph recommends Mercury)
+- [ ] buy domain name and point it to Vercel
+- [ ] develop demo app on subdomain
+- [ ] develop landing page with link to chrome extension
+- [ ] setup Stripe billing and subscriptions
+- [ ] calculate claude expense
+- [ ] decide on pricing
 
 # SCHEMA
 
@@ -78,3 +93,11 @@
 Note: The user_id and article_id combination is unique in the user_articles table.
 
 # The Goodreads for web articles?
+
+# Inspiration
+
+- https://screvi.com/
+
+- https://web.getmatter.com/home
+
+- https://hq.getmatter.com/

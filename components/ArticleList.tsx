@@ -10,6 +10,7 @@ import { Button } from "./ui/button";
 import { SORT_OPTIONS, SortDropdown, SortOption } from "./SortDropdown";
 import { useThemeShortcut } from "@/lib/hooks/useThemeShortcut";
 import FilterDropdown, { FILTER_OPTIONS, FilterId } from "./FilterDropdown";
+import { useChromeExtension } from "@/lib/hooks/useChromeExtension";
 
 export function ArticleList({
   initialArticles,
@@ -22,6 +23,7 @@ export function ArticleList({
   const [selectedFilter, setSelectedFilter] = useState<FilterId>("none");
 
   useThemeShortcut();
+  useChromeExtension();
 
   // First filter
   const searchFilteredArticles = useMemo(
