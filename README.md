@@ -1,4 +1,4 @@
-# Article Summarizer
+# Gistr
 
 A fullstack web application that automatically summarizes and saves web articles. Built with Next.js, Supabase, and AI.
 

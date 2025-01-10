@@ -23,6 +23,8 @@
 
 - [ ] deploy chrome extension
 
+- [x] add app name and logo to navbar
+- [x] change app name and favicon
 - [x] develop chrome extension for saving
 - [x] add filter for read vs unread
 - [x] keyboard shortcut d to change theme
@@ -47,15 +49,16 @@
 
 # Pre-launch
 
-- [ ] form an LLC
-- [ ] decide on name, logo and branding
 - [ ] setup business bank account (Steph recommends Mercury)
-- [ ] buy domain name and point it to Vercel
 - [ ] develop demo app on subdomain
 - [ ] develop landing page with link to chrome extension
 - [ ] setup Stripe billing and subscriptions
 - [ ] calculate claude expense
 - [ ] decide on pricing
+
+- [x] decide on name and (initial) logo
+- [x] buy domain name and point it to Vercel
+- [x] form an LLC
 
 # SCHEMA
 
@@ -101,3 +104,7 @@ Note: The user_id and article_id combination is unique in the user_articles tabl
 - https://web.getmatter.com/home
 
 - https://hq.getmatter.com/
+
+- https://gistr.so/
+
+- https://thestorygraph.com/
