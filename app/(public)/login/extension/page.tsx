@@ -14,7 +14,7 @@ export default function ExtensionCallback() {
         data: { session },
       } = await supabase.auth.getSession();
 
-      console.log(session);
+      console.log({ session });
 
       if (!session) {
         // middleware should redirect to login page if no user session found
@@ -22,16 +22,21 @@ export default function ExtensionCallback() {
       }
 
       if (session?.access_token && window.chrome?.runtime) {
-        // Send tokens to chrome extension
-        window.chrome.runtime.sendMessage(
-          "ncjiionllbclcpjbdflkhjffkiakpcmc", // TODO: Get Extension id from Chrome Web Store or dev mode
-          {
-            type: "LOGIN_SUCCESS",
-            access_token: session.access_token,
-            refresh_token: session.refresh_token,
-          }
-        );
-        window.close();
+        try {
+          // Send tokens to chrome extension
+          const resp = await window.chrome.runtime.sendMessage(
+            "ncjiionllbclcpjbdflkhjffkiakpcmc",
+            {
+              type: "LOGIN_SUCCESS",
+              access_token: session.access_token,
+              refresh_token: session.refresh_token,
+            }
+          );
+          console.log({ resp });
+          window.close();
+        } catch (error) {
+          console.error("Extension message error:", error);
+        }
       }
     };
 

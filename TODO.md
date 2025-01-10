@@ -19,10 +19,11 @@
 - [ ] add publish date
 - [ ] on title hover show preview of site
 - [ ] add multi-filter capability
-- [ ] change tag hashtags to badges
+- [ ] change tag hashtags to badges like in chrome extension
 
 - [ ] deploy chrome extension
 
+- [x] fix chrome extension login issue
 - [x] add app name and logo to navbar
 - [x] change app name and favicon
 - [x] develop chrome extension for saving
