@@ -20,7 +20,7 @@ export function useChromeExtension() {
       if (session?.access_token && window.chrome?.runtime) {
         // Send tokens to chrome extension
         window.chrome.runtime.sendMessage(
-          "ncjiionllbclcpjbdflkhjffkiakpcmc", // Get Extension id from Chrome Web Store or dev mode
+          process.env.NEXT_PUBLIC_EXTENSION_ID,
           {
             type: "LOGIN_SUCCESS",
             access_token: session.access_token,

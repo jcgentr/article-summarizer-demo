@@ -7,6 +7,7 @@
 - [ ] read progress bar on side
 - [ ] improve loading loads of summaries if necessary
 - [ ] improve login and signup flow (verify email not intuitive)
+- [ ] offer Github and Google sign in providers
 - [ ] improve author parsing
 - [ ] add ability to archive summaries
 - [ ] add ability to favorite summaries
@@ -20,9 +21,15 @@
 - [ ] on title hover show preview of site
 - [ ] add multi-filter capability
 - [ ] change tag hashtags to badges like in chrome extension
+- [ ] be able to delete from chrome extension? local vs db vs both
+- [ ] add debouncer on search
+- [ ] add user account modal (fold log out and user email into this)
 
-- [ ] deploy chrome extension
+- [ ] fix broken production chrome extension
 
+- [x] environment variable for chrome extension id
+- [x] deploy chrome extension (waiting on chrome review)
+- [x] try out claude haiku 3.5
 - [x] fix chrome extension login issue
 - [x] add app name and logo to navbar
 - [x] change app name and favicon
@@ -53,7 +60,7 @@
 - [ ] setup business bank account (Steph recommends Mercury)
 - [ ] develop demo app on subdomain
 - [ ] develop landing page with link to chrome extension
-- [ ] setup Stripe billing and subscriptions
+- [ ] setup Stripe billing and subscriptions (be able to cancel easily)
 - [ ] calculate claude expense
 - [ ] decide on pricing
 
