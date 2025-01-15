@@ -29,15 +29,13 @@ export function ArticleCard({
 }: Article & {
   handleTagClick: (tag: string) => void;
 }) {
-  const formattedTags = tags?.split(",").map((tag, index, array) => (
-    <span key={index}>
-      <span
-        onClick={() => handleTagClick(tag.trim())}
-        className="cursor-pointer hover:underline"
-      >
-        #{tag.trim()}
-      </span>
-      {index !== array.length - 1 && <span>, </span>}
+  const formattedTags = tags?.split(",").map((tag, index) => (
+    <span
+      key={index}
+      onClick={() => handleTagClick(tag.trim())}
+      className="text-sm cursor-pointer hover:underline bg-secondary/70 hover:bg-secondary/90 transition-colors px-3 py-1 rounded-full"
+    >
+      {tag.trim()}
     </span>
   ));
 
@@ -118,7 +116,9 @@ export function ArticleCard({
             <DeleteButton id={id} />
           </div>
         </div>
-        <div className="text-muted-foreground">{formattedTags}</div>
+        <div className="text-muted-foreground flex gap-2 flex-wrap">
+          {formattedTags}
+        </div>
       </CardContent>
     </Card>
   );

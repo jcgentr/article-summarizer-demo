@@ -20,13 +20,13 @@
 - [ ] add publish date
 - [ ] on title hover show preview of site
 - [ ] add multi-filter capability
-- [ ] change tag hashtags to badges like in chrome extension
 - [ ] be able to delete from chrome extension? local vs db vs both
 - [ ] add debouncer on search
 - [ ] add user account modal (fold log out and user email into this)
 
 - [ ] fix broken production chrome extension
 
+- [x] change tag hashtags to badges like in chrome extension
 - [x] environment variable for chrome extension id
 - [x] deploy chrome extension (waiting on chrome review)
 - [x] try out claude haiku 3.5
