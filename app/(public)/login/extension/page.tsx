@@ -14,7 +14,7 @@ export default function ExtensionCallback() {
         data: { session },
       } = await supabase.auth.getSession();
 
-      console.log({ session });
+      console.log(session);
 
       if (!session) {
         // middleware should redirect to login page if no user session found
@@ -22,10 +22,13 @@ export default function ExtensionCallback() {
       }
 
       if (session?.access_token && window.chrome?.runtime) {
+        console.log("inside if");
         try {
+          console.log("sending message");
           // Send tokens to chrome extension
           const resp = await window.chrome.runtime.sendMessage(
-            process.env.NEXT_PUBLIC_EXTENSION_ID,
+            // process.env.NEXT_PUBLIC_EXTENSION_ID,
+            "ncjiionllbclcpjbdflkhjffkiakpcmc",
             {
               type: "LOGIN_SUCCESS",
               access_token: session.access_token,
