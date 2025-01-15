@@ -27,8 +27,7 @@ export default function ExtensionCallback() {
           console.log("sending message");
           // Send tokens to chrome extension
           const resp = await window.chrome.runtime.sendMessage(
-            // process.env.NEXT_PUBLIC_EXTENSION_ID,
-            "ncjiionllbclcpjbdflkhjffkiakpcmc",
+            process.env.NEXT_PUBLIC_EXTENSION_ID,
             {
               type: "LOGIN_SUCCESS",
               access_token: session.access_token,
