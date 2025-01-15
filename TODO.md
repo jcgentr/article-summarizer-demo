@@ -21,11 +21,12 @@
 - [ ] on title hover show preview of site
 - [ ] add multi-filter capability
 - [ ] be able to delete from chrome extension? local vs db vs both
-- [ ] add debouncer on search
 - [ ] add user account modal (fold log out and user email into this)
+- [ ] virtualize article list (https://tanstack.com/virtual/latest)
 
 - [ ] fix broken production chrome extension
 
+- [x] add debouncer on search
 - [x] change tag hashtags to badges like in chrome extension
 - [x] environment variable for chrome extension id
 - [x] deploy chrome extension (waiting on chrome review)

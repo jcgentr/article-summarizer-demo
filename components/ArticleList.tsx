@@ -11,6 +11,11 @@ import { SORT_OPTIONS, SortDropdown, SortOption } from "./SortDropdown";
 import { useThemeShortcut } from "@/lib/hooks/useThemeShortcut";
 import FilterDropdown, { FILTER_OPTIONS, FilterId } from "./FilterDropdown";
 import { useChromeExtension } from "@/lib/hooks/useChromeExtension";
+import { useDebouncedValue } from "@/lib/hooks/useDebouncedValue";
+
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
 
 export function ArticleList({
   initialArticles,
@@ -21,6 +26,7 @@ export function ArticleList({
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [sortValue, setSortValue] = useState<SortOption>("Newest first");
   const [selectedFilter, setSelectedFilter] = useState<FilterId>("none");
+  const debouncedSearch = useDebouncedValue(searchTerm, 300);
 
   useThemeShortcut();
   useChromeExtension();
@@ -29,7 +35,7 @@ export function ArticleList({
   const searchFilteredArticles = useMemo(
     () =>
       initialArticles.filter((article) => {
-        const searchLower = searchTerm.toLowerCase();
+        const searchLower = debouncedSearch.toLowerCase();
         return (
           article.title.toLowerCase().includes(searchLower) ||
           article.author?.toLowerCase().includes(searchLower) ||
@@ -37,7 +43,7 @@ export function ArticleList({
           article.url.toLowerCase().includes(searchLower)
         );
       }),
-    [initialArticles, searchTerm]
+    [initialArticles, debouncedSearch]
   );
 
   // Then apply selected filter
@@ -62,9 +68,21 @@ export function ArticleList({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const articleList = useMemo(
+    () => (
+      <ul className="flex flex-col gap-4 mb-8">
+        {sortedArticles.map((article) => (
+          <li key={article.id}>
+            <ArticleCard
+              {...article}
+              handleTagClick={(tag: string) => setSearchTerm(tag)}
+            />
+          </li>
+        ))}
+      </ul>
+    ),
+    [sortedArticles]
+  );
 
   return (
     <>
@@ -92,16 +110,7 @@ export function ArticleList({
         </div>
       </div>
 
-      <ul className="flex flex-col gap-4 mb-8">
-        {sortedArticles.map((article) => (
-          <li key={article.id}>
-            <ArticleCard
-              {...article}
-              handleTagClick={(tag: string) => setSearchTerm(tag)}
-            />
-          </li>
-        ))}
-      </ul>
+      {articleList}
 
       {showScrollTop && (
         <Button
