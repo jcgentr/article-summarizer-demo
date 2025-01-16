@@ -110,7 +110,13 @@ export function ArticleList({
         </div>
       </div>
 
-      {articleList}
+      {sortedArticles.length === 0 ? (
+        <p className="text-muted-foreground text-center py-8">
+          No articles found
+        </p>
+      ) : (
+        articleList
+      )}
 
       {showScrollTop && (
         <Button

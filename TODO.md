@@ -1,13 +1,7 @@
 - [ ] be able to chat with AI about article (may evolve to RAG)
 - [ ] build tables and data analytics for articles
-- [ ] add print button
-- [ ] add feedback button and form
 - [ ] be able to configure summarization
-- [ ] make tags expandable
 - [ ] read progress bar on side
-- [ ] improve loading loads of summaries if necessary
-- [ ] improve login and signup flow (verify email not intuitive)
-- [ ] offer Github and Google sign in providers
 - [ ] improve author parsing
 - [ ] add ability to archive summaries
 - [ ] add ability to favorite summaries
@@ -16,16 +10,22 @@
 - [ ] most popular articles leaderboard based on all users saved summaries
 - [ ] top rated articles leaderboard
 - [ ] update existing article on create if hash of content has changed
-- [ ] add OG image next to title
-- [ ] add publish date
 - [ ] on title hover show preview of site
 - [ ] add multi-filter capability
 - [ ] be able to delete from chrome extension? local vs db vs both
-- [ ] add user account modal (fold log out and user email into this)
 - [ ] virtualize article list (https://tanstack.com/virtual/latest)
+  - [ ] add infinite scrolling with API fetching
+- [ ] add print button
+- [ ] add feedback button and form
+- [ ] add OG image next to title
+- [ ] add publish date
+- [ ] improve login and signup flow (verify email not intuitive)
+- [ ] offer Github and Google sign in providers
+- [ ] try groqcloud
 
 - [ ] fix broken production chrome extension
 
+- [x] add user account modal (fold log out and user email into this)
 - [x] add debouncer on search
 - [x] change tag hashtags to badges like in chrome extension
 - [x] environment variable for chrome extension id
@@ -60,11 +60,13 @@
 
 - [ ] setup business bank account (Steph recommends Mercury)
 - [ ] develop demo app on subdomain
-- [ ] develop landing page with link to chrome extension
+- [ ] develop landing page with link to chrome extension (no subdomain)
+- [ ] put main app on app subdomain
 - [ ] setup Stripe billing and subscriptions (be able to cancel easily)
-- [ ] calculate claude expense
+
 - [ ] decide on pricing
 
+- [x] calculate claude expense (see Google sheet)
 - [x] decide on name and (initial) logo
 - [x] buy domain name and point it to Vercel
 - [x] form an LLC
@@ -73,7 +75,7 @@
 
 ## Database Schema
 
-### Articles Table
+### Articles Table (articles)
 
 | Column     | Type                     | Description                      |
 | ---------- | ------------------------ | -------------------------------- |
@@ -88,7 +90,7 @@
 | created_at | timestamp with time zone | When the record was created      |
 | updated_at | timestamp with time zone | When the record was last updated |
 
-### User Articles Table
+### User Articles Table (user_articles)
 
 | Column      | Type                     | Description                      |
 | ----------- | ------------------------ | -------------------------------- |
@@ -103,6 +105,17 @@
 | updated_at  | timestamp with time zone | When the record was last updated |
 
 Note: The user_id and article_id combination is unique in the user_articles table.
+
+### User Metadata Table (user_metadata)
+
+| Column              | Type                     | Description                               |
+| ------------------- | ------------------------ | ----------------------------------------- |
+| user_id             | uuid                     | Primary key, references auth.users(id)    |
+| plan_type           | text                     | Subscription plan type (defaults to free) |
+| summaries_generated | integer                  | Number of summaries in current cycle      |
+| billing_cycle_start | timestamp with time zone | Start of current billing cycle            |
+| created_at          | timestamp with time zone | When the record was created               |
+| updated_at          | timestamp with time zone | When the record was last updated          |
 
 # The Goodreads for web articles?
 

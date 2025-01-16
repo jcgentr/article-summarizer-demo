@@ -1,10 +1,9 @@
-import { logout } from "@/app/(protected)/actions";
-import { Button } from "@/components/ui/button";
 import { User } from "@supabase/supabase-js";
 import { ModeToggle } from "./ModeToggle";
 import Image from "next/image";
 import gistrLogo from "../app/images/icon-32.png";
 import Link from "next/link";
+import { NavUser } from "./NavUser";
 
 export default async function NavBar({ user }: { user: User }) {
   return (
@@ -19,19 +18,12 @@ export default async function NavBar({ user }: { user: User }) {
               width="32"
               height="32"
             />
-            <span className="text-2xl">Gistr</span>
+            <span className="text-2xl font-bold">Gistr</span>
           </h2>
         </Link>
         <div className="flex gap-4">
-          <div className="hidden md:flex items-center space-x-4">
-            <span className="text-sm text-muted-foreground">{user.email}</span>
-          </div>
+          <NavUser email={user.email || ""} />
           <ModeToggle />
-          <form action={logout}>
-            <Button type="submit" variant="outline">
-              Log out
-            </Button>
-          </form>
         </div>
       </div>
     </nav>
