@@ -21,10 +21,11 @@
 - [ ] add publish date
 - [ ] improve login and signup flow (verify email not intuitive)
 - [ ] offer Github and Google sign in providers
-- [ ] try groqcloud
+- [ ] improve slogan like "Get the gist of a web article"
 
 - [ ] fix broken production chrome extension
 
+- [x] try groqcloud (not ready yet; no paid tier)
 - [x] add user account modal (fold log out and user email into this)
 - [x] add debouncer on search
 - [x] change tag hashtags to badges like in chrome extension
