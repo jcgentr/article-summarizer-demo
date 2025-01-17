@@ -6,11 +6,8 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/utils/supabase/server";
 import { generateSummaryAndTags } from "@/lib/ai";
 import { redirect } from "next/navigation";
-import {
-  PlanType,
-  shouldResetBillingCycle,
-  SUMMARY_LIMITS,
-} from "@/lib/billing";
+import { shouldResetBillingCycle, SUMMARY_LIMITS } from "@/lib/billing";
+import { PlanType } from "./types";
 
 export async function createArticleSummary(
   prevState: {

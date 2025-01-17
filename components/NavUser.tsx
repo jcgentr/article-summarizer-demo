@@ -12,8 +12,21 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "./ui/button";
 import { logout } from "@/app/(protected)/actions";
+import { PlanType } from "@/app/(protected)/types";
 
-export function NavUser({ email }: { email: string }) {
+interface NavUserProps {
+  email: string;
+  planType: PlanType;
+  summariesGenerated: number;
+  summaryLimit: number;
+}
+
+export function NavUser({
+  email,
+  planType,
+  summariesGenerated,
+  summaryLimit,
+}: NavUserProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -30,13 +43,34 @@ export function NavUser({ email }: { email: string }) {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <Sparkles className="h-5 w-5 mr-2" />
-            Upgrade to Pro
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
+        <DropdownMenuLabel className="px-2 py-1.5">
+          <div className="space-y-1">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-muted-foreground">Plan</span>
+              <span className="text-sm font-medium">
+                {planType === "free" ? "Free" : "Pro"}
+              </span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-muted-foreground">Usage</span>
+              <span className="text-sm font-medium">
+                {summariesGenerated} / {summaryLimit}
+              </span>
+            </div>
+          </div>
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
+        {planType === "free" && (
+          <>
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                <Sparkles className="h-5 w-5 mr-2" />
+                Upgrade to Pro
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+          </>
+        )}
         <DropdownMenuGroup>
           <DropdownMenuItem>
             <CreditCard className="h-5 w-5 mr-2" />

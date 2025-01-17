@@ -1,15 +1,10 @@
+import { BillingCycleInfo } from "@/app/(protected)/types";
+
 // summaries per month
 export const SUMMARY_LIMITS = {
   free: 15,
   pro: 100,
 } as const;
-
-export type PlanType = keyof typeof SUMMARY_LIMITS;
-
-interface BillingCycleInfo {
-  shouldReset: boolean;
-  nextBillingDate: Date | null;
-}
 
 export function shouldResetBillingCycle(
   cycleStart: Date,

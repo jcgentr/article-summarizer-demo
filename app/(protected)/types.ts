@@ -1,4 +1,4 @@
-import { PlanType } from "@/lib/billing";
+import { SUMMARY_LIMITS } from "@/lib/billing";
 
 export interface Article {
   id: string;
@@ -22,6 +22,13 @@ export interface UserMetadata {
   billing_cycle_start: string;
   created_at: string;
   updated_at: string;
+}
+
+export type PlanType = keyof typeof SUMMARY_LIMITS;
+
+export interface BillingCycleInfo {
+  shouldReset: boolean;
+  nextBillingDate: Date | null;
 }
 
 export interface HNStory {
