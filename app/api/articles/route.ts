@@ -1,4 +1,7 @@
 import { generateSummaryAndTags } from "@/lib/ai";
+import { PlanType } from "@/lib/billing";
+import { SUMMARY_LIMITS } from "@/lib/billing";
+import { shouldResetBillingCycle } from "@/lib/billing";
 import { createClient } from "@/utils/supabase/server";
 import { Readability } from "@mozilla/readability";
 import { JSDOM } from "jsdom";
@@ -109,6 +112,69 @@ export async function POST(request: Request) {
       });
     }
 
+    // Check user's plan and summary limit
+    const { data: userMetadata, error: metadataError } = await supabase
+      .from("user_metadata")
+      .select("plan_type, summaries_generated, billing_cycle_start")
+      .eq("user_id", user.id)
+      .single();
+
+    if (metadataError) {
+      throw new Error(
+        `Failed to fetch user metadata: ${metadataError.message}`
+      );
+    }
+
+    // Check if billing cycle needs reset (monthly)
+    const now = new Date();
+    const cycleStart = new Date(userMetadata.billing_cycle_start);
+    const { shouldReset, nextBillingDate } = shouldResetBillingCycle(
+      cycleStart,
+      now
+    );
+
+    if (shouldReset && nextBillingDate) {
+      // Reset cycle
+      await supabase
+        .from("user_metadata")
+        .update({
+          summaries_generated: 0,
+          billing_cycle_start: nextBillingDate.toISOString(),
+        })
+        .eq("user_id", user.id);
+
+      userMetadata.summaries_generated = 0;
+    }
+
+    const limit =
+      SUMMARY_LIMITS[userMetadata.plan_type as PlanType] ?? SUMMARY_LIMITS.free;
+
+    if (userMetadata.summaries_generated >= limit) {
+      const resetText = `Resets on ${new Date(
+        userMetadata.billing_cycle_start
+      ).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      })}.`;
+      return NextResponse.json(
+        {
+          error:
+            userMetadata.plan_type === "free"
+              ? `You've reached your free plan limit. Please upgrade to Pro for more summaries. Free plan: ${userMetadata.summaries_generated}/${limit} summaries used. ${resetText}`
+              : `You've reached your monthly summary limit. Pro plan: ${userMetadata.summaries_generated}/${limit} summaries used. ${resetText}`,
+          code: "quota_exceeded",
+          plan: userMetadata.plan_type,
+          limit,
+          used: userMetadata.summaries_generated,
+        },
+        {
+          status: 402, // Payment Required
+          headers: corsHeaders,
+        }
+      );
+    }
+
     // If article doesn't exist, fetch and create it
     const response = await fetch(url);
     const html = await response.text();
@@ -162,6 +228,13 @@ export async function POST(request: Request) {
     if (userArticleError) {
       throw new Error(`Supabase error: ${userArticleError.message}`);
     }
+
+    await supabase
+      .from("user_metadata")
+      .update({
+        summaries_generated: userMetadata.summaries_generated + 1,
+      })
+      .eq("user_id", user.id);
 
     return NextResponse.json(newArticle, { status: 201, headers: corsHeaders });
   } catch (error) {

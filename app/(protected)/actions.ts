@@ -6,6 +6,11 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/utils/supabase/server";
 import { generateSummaryAndTags } from "@/lib/ai";
 import { redirect } from "next/navigation";
+import {
+  PlanType,
+  shouldResetBillingCycle,
+  SUMMARY_LIMITS,
+} from "@/lib/billing";
 
 export async function createArticleSummary(
   prevState: {
@@ -61,6 +66,52 @@ export async function createArticleSummary(
       return { message: "Added existing article summary" };
     }
 
+    // Check user's plan and summary limit
+    const { data: userMetadata, error: metadataError } = await supabase
+      .from("user_metadata")
+      .select("plan_type, summaries_generated, billing_cycle_start")
+      .eq("user_id", user.id)
+      .single();
+
+    if (metadataError) {
+      throw new Error(
+        `Failed to fetch user metadata: ${metadataError.message}`
+      );
+    }
+
+    // Check if billing cycle needs reset (monthly)
+    const now = new Date();
+    const cycleStart = new Date(userMetadata.billing_cycle_start);
+    const { shouldReset, nextBillingDate } = shouldResetBillingCycle(
+      cycleStart,
+      now
+    );
+
+    if (shouldReset && nextBillingDate) {
+      // Reset cycle
+      await supabase
+        .from("user_metadata")
+        .update({
+          summaries_generated: 0,
+          billing_cycle_start: nextBillingDate.toISOString(),
+        })
+        .eq("user_id", user.id);
+
+      userMetadata.summaries_generated = 0;
+    }
+
+    const limit =
+      SUMMARY_LIMITS[userMetadata.plan_type as PlanType] ?? SUMMARY_LIMITS.free;
+
+    if (userMetadata.summaries_generated >= limit) {
+      return {
+        message:
+          userMetadata.plan_type === "free"
+            ? "You've reached your free plan limit. Please upgrade to Pro for more summaries."
+            : "You've reached your monthly summary limit.",
+      };
+    }
+
     // If article doesn't exist, fetch and create it
     const response = await fetch(url);
     const html = await response.text();
@@ -107,6 +158,13 @@ export async function createArticleSummary(
     if (userArticleError) {
       throw new Error(`Supabase error: ${userArticleError.message}`);
     }
+
+    await supabase
+      .from("user_metadata")
+      .update({
+        summaries_generated: userMetadata.summaries_generated + 1,
+      })
+      .eq("user_id", user.id);
 
     revalidatePath("/");
     return { message: "Added article summary" };

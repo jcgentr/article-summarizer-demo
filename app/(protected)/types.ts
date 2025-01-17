@@ -1,3 +1,5 @@
+import { PlanType } from "@/lib/billing";
+
 export interface Article {
   id: string;
   url: string;
@@ -11,4 +13,29 @@ export interface Article {
   rating: number | null;
   created_at: string;
   updated_at: string;
+}
+
+export interface UserMetadata {
+  user_id: string;
+  plan_type: PlanType;
+  summaries_generated: number;
+  billing_cycle_start: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface HNStory {
+  by: string; // Username of submitter
+  descendants: number; // Number of comments
+  id: number; // Story ID
+  kids: number[]; // IDs of comments
+  score: number; // Upvote count
+  time: number; // Unix timestamp
+  title: string; // Story title
+  type: "story"; // Type of item
+  url: string; // URL of the story
+}
+
+export interface ArticleWithRank extends Article {
+  rank: number;
 }

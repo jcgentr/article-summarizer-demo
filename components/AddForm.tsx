@@ -56,6 +56,8 @@ export function AddForm() {
     if (state.message) {
       if (state.message.startsWith("Failed")) {
         toast.error(state.message);
+      } else if (state.message.startsWith("You've")) {
+        toast.warning(state.message);
       } else {
         toast.success(state.message);
       }
