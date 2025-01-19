@@ -21,11 +21,13 @@
 - [ ] add publish date
 - [ ] improve login and signup flow (verify email not intuitive)
 - [ ] offer Github and Google sign in providers
+- [ ] offer forgot password option
 - [ ] improve slogan like "Get the gist of a web article"
 
 - [ ] fix broken production chrome extension
 - [ ] add summary count and limit and plan type in user account menu
 
+- [x] create user_metadata entries for existing users
 - [x] add billing limit enforcement and reset logic
 - [x] try groqcloud (not ready yet; no paid tier)
 - [x] add user account modal (fold log out and user email into this)

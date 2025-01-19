@@ -9,8 +9,7 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin":
-    "chrome-extension://ncjiionllbclcpjbdflkhjffkiakpcmc",
+  "Access-Control-Allow-Origin": `chrome-extension://${process.env.NEXT_PUBLIC_EXTENSION_ID}`,
   "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
   "Access-Control-Allow-Headers":
     "Content-Type, Authorization, X-Refresh-Token",
@@ -22,6 +21,7 @@ export async function OPTIONS() {
 }
 
 export async function POST(request: Request) {
+  console.log(`chrome-extension://${process.env.NEXT_PUBLIC_EXTENSION_ID}`);
   try {
     const headersList = await headers();
     const token = headersList.get("Authorization")?.split("Bearer ")[1];
