@@ -11,12 +11,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "./ui/button";
-import { logout } from "@/app/(protected)/actions";
+import {
+  createCheckoutSession,
+  createPortalSession,
+  logout,
+} from "@/app/(protected)/actions";
 import { PlanType } from "@/app/(protected)/types";
 
 interface NavUserProps {
   email: string;
   planType: PlanType;
+  stripeCustomerId: string | null;
   summariesGenerated: number;
   summaryLimit: number;
 }
@@ -24,6 +29,7 @@ interface NavUserProps {
 export function NavUser({
   email,
   planType,
+  stripeCustomerId,
   summariesGenerated,
   summaryLimit,
 }: NavUserProps) {
@@ -63,21 +69,43 @@ export function NavUser({
         {planType === "free" && (
           <>
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Sparkles className="h-5 w-5 mr-2" />
-                Upgrade to Pro
-              </DropdownMenuItem>
+              <form action={createCheckoutSession}>
+                <DropdownMenuItem
+                  asChild
+                  onSelect={(e) => {
+                    e.preventDefault();
+                  }}
+                >
+                  <button className="w-full flex items-center cursor-pointer">
+                    <Sparkles className="h-5 w-5 mr-2" />
+                    Upgrade to Pro
+                  </button>
+                </DropdownMenuItem>
+              </form>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
           </>
         )}
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <CreditCard className="h-5 w-5 mr-2" />
-            Billing
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
+        {stripeCustomerId && (
+          <>
+            <DropdownMenuGroup>
+              <form action={createPortalSession}>
+                <DropdownMenuItem
+                  asChild
+                  onSelect={(e) => {
+                    e.preventDefault();
+                  }}
+                >
+                  <button className="w-full flex items-center cursor-pointer">
+                    <CreditCard className="h-5 w-5 mr-2" />
+                    Billing
+                  </button>
+                </DropdownMenuItem>
+              </form>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+          </>
+        )}
         <form action={logout}>
           <DropdownMenuItem
             asChild
@@ -85,7 +113,7 @@ export function NavUser({
               e.preventDefault();
             }}
           >
-            <button className="w-full">
+            <button className="w-full cursor-pointer">
               <LogOut className="h-5 w-5 mr-2" />
               Log out
             </button>

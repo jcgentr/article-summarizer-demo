@@ -15,6 +15,6 @@ export function shouldResetBillingCycle(
 
   return {
     shouldReset: now >= nextCycle,
-    nextBillingDate: now >= nextCycle ? nextCycle : null,
+    nextBillingDate: nextCycle,
   };
 }

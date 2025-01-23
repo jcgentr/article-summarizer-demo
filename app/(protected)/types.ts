@@ -18,6 +18,7 @@ export interface Article {
 export interface UserMetadata {
   user_id: string;
   plan_type: PlanType;
+  stripe_customer_id: string | null;
   summaries_generated: number;
   billing_cycle_start: string;
   created_at: string;
@@ -28,7 +29,7 @@ export type PlanType = keyof typeof SUMMARY_LIMITS;
 
 export interface BillingCycleInfo {
   shouldReset: boolean;
-  nextBillingDate: Date | null;
+  nextBillingDate: Date;
 }
 
 export interface HNStory {

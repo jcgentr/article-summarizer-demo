@@ -2,10 +2,15 @@ import config from "@/app/config";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-export async function createClient() {
+export async function createClient(useServiceRole = false) {
   const cookieStore = await cookies();
 
-  return createServerClient(config.supabaseUrl, config.supabaseAnonKey, {
+  const supabaseUrl = config.supabaseUrl;
+  const supabaseKey = useServiceRole
+    ? config.supabaseServiceRoleKey
+    : config.supabaseAnonKey;
+
+  return createServerClient(supabaseUrl, supabaseKey, {
     cookies: {
       getAll() {
         return cookieStore.getAll();

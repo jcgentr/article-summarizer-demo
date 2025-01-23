@@ -24,9 +24,8 @@
 - [ ] offer forgot password option
 - [ ] improve slogan like "Get the gist of a web article"
 
-- [ ] fix broken production chrome extension
-- [ ] add summary count and limit and plan type in user account menu
-
+- [x] add summary count and limit and plan type in user account menu
+- [x] fix broken production chrome extension
 - [x] create user_metadata entries for existing users
 - [x] add billing limit enforcement and reset logic
 - [x] try groqcloud (not ready yet; no paid tier)
@@ -67,6 +66,7 @@
 - [ ] develop demo app on subdomain
 - [ ] develop landing page with link to chrome extension (no subdomain)
 - [ ] put main app on app subdomain
+- [ ] read and complete: https://docs.stripe.com/billing/testing
 - [ ] setup Stripe billing and subscriptions (be able to cancel easily)
 
 - [ ] decide on pricing
