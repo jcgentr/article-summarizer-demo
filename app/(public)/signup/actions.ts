@@ -23,7 +23,7 @@ export async function signup(
 
   if (error) {
     console.error(error);
-    return { message: `${error.message} (${new Date().toLocaleString()})` };
+    return { message: `${error.message}` };
   }
 
   console.log("signed up successfully");

@@ -23,7 +23,7 @@ export async function login(
 
   if (error) {
     console.error(error);
-    return { message: `${error.message} (${new Date().toLocaleString()})` };
+    return { message: `${error.message}` };
   }
 
   console.log("logged in successfully");

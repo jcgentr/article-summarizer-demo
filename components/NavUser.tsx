@@ -1,6 +1,6 @@
 "use client";
 
-import { CreditCard, LogOut, Sparkles, User } from "lucide-react";
+import { CreditCard, LogOut, Settings, Sparkles, User } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,6 +17,7 @@ import {
   logout,
 } from "@/app/(protected)/actions";
 import { PlanType } from "@/app/(protected)/types";
+import Link from "next/link";
 
 interface NavUserProps {
   email: string;
@@ -44,7 +45,7 @@ export function NavUser({
       <DropdownMenuContent className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg">
         <DropdownMenuLabel className="p-0 font-normal">
           <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-            <User className="h-5 w-5 mr-2 flex-shrink-0" />
+            <User className="h-5 w-5 mr-1 flex-shrink-0" />
             <span className="truncate">{email}</span>
           </div>
         </DropdownMenuLabel>
@@ -66,6 +67,15 @@ export function NavUser({
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuItem asChild>
+            <Link href="/account" className="flex items-center cursor-pointer">
+              <Settings className="h-5 w-5 mr-1 flex-shrink-0" />
+              Account
+            </Link>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
         {planType === "free" && (
           <>
             <DropdownMenuGroup>
@@ -77,7 +87,7 @@ export function NavUser({
                   }}
                 >
                   <button className="w-full flex items-center cursor-pointer">
-                    <Sparkles className="h-5 w-5 mr-2" />
+                    <Sparkles className="h-5 w-5 mr-1 flex-shrink-0" />
                     Upgrade to Pro
                   </button>
                 </DropdownMenuItem>
@@ -97,7 +107,7 @@ export function NavUser({
                   }}
                 >
                   <button className="w-full flex items-center cursor-pointer">
-                    <CreditCard className="h-5 w-5 mr-2" />
+                    <CreditCard className="h-5 w-5 mr-1 flex-shrink-0" />
                     Billing
                   </button>
                 </DropdownMenuItem>
@@ -114,7 +124,7 @@ export function NavUser({
             }}
           >
             <button className="w-full cursor-pointer">
-              <LogOut className="h-5 w-5 mr-2" />
+              <LogOut className="h-5 w-5 mr-1 flex-shrink-0" />
               Log out
             </button>
           </DropdownMenuItem>

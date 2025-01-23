@@ -85,7 +85,7 @@ export default function SignupPage() {
         role="status"
         className="mt-4 text-sm text-red-600 h-6"
       >
-        {state?.message}
+        {state?.message && `${state?.message} (${new Date().toLocaleString()})`}
       </p>
       <div className="mt-6 text-center">
         <p className="text-sm text-muted-foreground">

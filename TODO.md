@@ -23,6 +23,7 @@
 - [ ] offer Github and Google sign in providers
 - [ ] offer forgot password option
 - [ ] improve slogan like "Get the gist of a web article"
+- [ ] investigate why so many summaries are not parsed
 
 - [x] add summary count and limit and plan type in user account menu
 - [x] fix broken production chrome extension
