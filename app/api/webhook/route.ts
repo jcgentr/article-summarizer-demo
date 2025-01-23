@@ -21,9 +21,16 @@ export async function POST(req: Request) {
     }
 
     event = stripe.webhooks.constructEvent(body, signature, endpointSecret);
-  } catch (err: any) {
-    console.log(`⚠️ Webhook signature verification failed:`, err.message);
-    return new NextResponse(`Webhook Error: ${err.message}`, { status: 400 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.log(`⚠️ Webhook signature verification failed:`, error.message);
+      return new NextResponse(`Webhook Error: ${error.message}`, {
+        status: 400,
+      });
+    }
+    return new NextResponse(`Webhook Error: Unknown error occurred`, {
+      status: 400,
+    });
   }
 
   const supabase = await createClient(true); // Use service role for webhook
@@ -140,8 +147,13 @@ export async function POST(req: Request) {
     }
 
     return new NextResponse("Webhook processed successfully", { status: 200 });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Webhook processing error:", error);
-    return new NextResponse(`Webhook Error: ${error.message}`, { status: 400 });
+    if (error instanceof Error) {
+      return new NextResponse(`Webhook Error: ${error.message}`, {
+        status: 400,
+      });
+    }
+    return new NextResponse("Unknown webhook error occurred", { status: 400 });
   }
 }
