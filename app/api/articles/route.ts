@@ -133,7 +133,7 @@ export async function POST(request: Request) {
       now
     );
 
-    if (shouldReset && nextBillingDate) {
+    if (shouldReset) {
       // Reset cycle
       await supabase
         .from("user_metadata")
@@ -150,13 +150,15 @@ export async function POST(request: Request) {
       SUMMARY_LIMITS[userMetadata.plan_type as PlanType] ?? SUMMARY_LIMITS.free;
 
     if (userMetadata.summaries_generated >= limit) {
-      const resetText = `Resets on ${new Date(
-        userMetadata.billing_cycle_start
-      ).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-      })}.`;
+      const resetText = `Resets on ${nextBillingDate.toLocaleDateString(
+        "en-US",
+        {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        }
+      )}.`;
+
       return NextResponse.json(
         {
           error:
