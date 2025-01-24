@@ -18,6 +18,8 @@ import {
 } from "@/app/(protected)/actions";
 import { PlanType } from "@/app/(protected)/types";
 import Link from "next/link";
+import { useChromeExtension } from "@/lib/hooks/useChromeExtension";
+import { useThemeShortcut } from "@/lib/hooks/useThemeShortcut";
 
 interface NavUserProps {
   email: string;
@@ -34,6 +36,9 @@ export function NavUser({
   summariesGenerated,
   summaryLimit,
 }: NavUserProps) {
+  useThemeShortcut();
+  useChromeExtension();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
