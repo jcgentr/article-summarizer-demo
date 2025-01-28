@@ -2,7 +2,10 @@
 
 import { useActionState, useEffect } from "react";
 import { useFormStatus } from "react-dom";
-import { createArticleSummary } from "../app/(protected)/actions";
+import {
+  createArticleSummary,
+  createCheckoutSession,
+} from "../app/(protected)/actions";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
@@ -57,7 +60,20 @@ export function AddForm() {
       if (state.message.startsWith("Failed")) {
         toast.error(state.message);
       } else if (state.message.startsWith("You've")) {
-        toast.warning(state.message);
+        if (state.message.includes("free")) {
+          toast.warning(state.message, {
+            description: (
+              <button
+                onClick={() => createCheckoutSession()}
+                className="font-medium underline hover:no-underline"
+              >
+                Please upgrade to Pro for more summaries.
+              </button>
+            ),
+          });
+        } else {
+          toast.warning(state.message);
+        }
       } else {
         toast.success(state.message);
       }

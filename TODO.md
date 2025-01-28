@@ -74,10 +74,11 @@
 - [ ] read and complete: https://docs.stripe.com/billing/testing
 - [ ] upgrade accounts for Vercel and Supabase
 
-- [ ] setup Stripe billing and subscriptions (be able to cancel easily)
-- [ ] decide on pricing
-- [ ] setup business bank account (Steph recommends Mercury)
+- [ ] Link Mercury account to Stripe
 
+- [x] setup business bank account (Steph recommends Mercury)
+- [x] setup Stripe billing and subscriptions (be able to cancel easily)
+- [x] decide on pricing
 - [x] calculate claude expense (see Google sheet)
 - [x] decide on name and (initial) logo
 - [x] buy domain name and point it to Vercel

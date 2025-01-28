@@ -106,7 +106,7 @@ export async function createArticleSummary(
       return {
         message:
           userMetadata.plan_type === "free"
-            ? "You've reached your free plan limit. Please upgrade to Pro for more summaries."
+            ? "You've reached your free plan limit."
             : "You've reached your monthly summary limit.",
       };
     }
