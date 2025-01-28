@@ -200,18 +200,8 @@ export default function PrivacyPolicy() {
       </section>
 
       <section className="space-y-6">
-        <h2 className="text-2xl font-bold">6. Children&apos;s Privacy</h2>
-        <p className="text-lg">
-          Gistr is not intended for use by individuals under the age of 13. We
-          do not knowingly collect personal information from children. If you
-          believe we have collected data from a child under 13, please contact
-          us immediately.
-        </p>
-      </section>
-
-      <section className="space-y-6">
         <h2 className="text-2xl font-bold">
-          7. Changes to This Privacy Policy
+          6. Changes to This Privacy Policy
         </h2>
         <p className="text-lg">
           We may update this Privacy Policy from time to time. Any changes will
@@ -223,7 +213,7 @@ export default function PrivacyPolicy() {
       </section>
 
       <section className="space-y-6">
-        <h2 className="text-2xl font-bold">8. Contact Us</h2>
+        <h2 className="text-2xl font-bold">7. Contact Us</h2>
         <p className="text-lg">
           If you have any questions or concerns about this Privacy Policy,
           please contact us at:

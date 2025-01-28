@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { signup } from "./actions";
+import { useSearchParams } from "next/navigation";
 
 const initialState = {
   message: "",
@@ -57,11 +58,14 @@ function PasswordInput() {
 }
 
 export default function SignupPage() {
+  const searchParams = useSearchParams();
+  const plan = searchParams.get("plan");
   const [state, formAction] = useActionState(signup, initialState);
 
   return (
     <div>
       <form action={formAction} className="space-y-8">
+        <input type="hidden" name="plan" value={plan ?? undefined} />
         <div className="space-y-2">
           <h1 className="text-2xl font-bold tracking-tight">Sign up</h1>
           <p className="text-sm text-muted-foreground">

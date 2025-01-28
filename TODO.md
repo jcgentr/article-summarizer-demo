@@ -24,6 +24,11 @@
 - [ ] offer forgot password option
 - [ ] improve slogan like "Get the gist of a web article"
 - [ ] investigate why so many summaries are not parsed
+- [ ] initial modal for demo and free users telling them of usage limits
+- [ ] link to Chrome extension in user menu
+
+- [ ] try out deepseek API
+- [ ] develop and deploy landing page
 
 - [x] add summary count and limit and plan type in user account menu
 - [x] fix broken production chrome extension
@@ -63,14 +68,15 @@
 
 # Pre-launch
 
-- [ ] setup business bank account (Steph recommends Mercury)
 - [ ] develop demo app on subdomain
 - [ ] develop landing page with link to chrome extension (no subdomain)
 - [ ] put main app on app subdomain
 - [ ] read and complete: https://docs.stripe.com/billing/testing
-- [ ] setup Stripe billing and subscriptions (be able to cancel easily)
+- [ ] upgrade accounts for Vercel and Supabase
 
+- [ ] setup Stripe billing and subscriptions (be able to cancel easily)
 - [ ] decide on pricing
+- [ ] setup business bank account (Steph recommends Mercury)
 
 - [x] calculate claude expense (see Google sheet)
 - [x] decide on name and (initial) logo
@@ -136,3 +142,5 @@ Note: The user_id and article_id combination is unique in the user_articles tabl
 - https://gistr.so/
 
 - https://thestorygraph.com/
+
+- https://glasp.co/

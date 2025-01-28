@@ -12,6 +12,7 @@ export async function signup(
   formData: FormData
 ) {
   console.log("signing up...");
+  const plan = formData.get("plan") as string | undefined;
   const supabase = await createClient();
 
   // type-casting here for convenience
@@ -28,5 +29,11 @@ export async function signup(
 
   console.log("signed up successfully");
   revalidatePath("/", "layout");
+
+  // Redirect to login with plan parameter if pro plan was selected
+  if (plan === "pro") {
+    redirect("/login?plan=pro");
+  }
+
   redirect("/");
 }

@@ -12,6 +12,8 @@ export async function login(
   formData: FormData
 ) {
   console.log("logging in...");
+  const plan = formData.get("plan") as string | undefined;
+  console.log(plan);
   const supabase = await createClient();
 
   // type-casting here for convenience
@@ -28,5 +30,36 @@ export async function login(
 
   console.log("logged in successfully");
   revalidatePath("/", "layout");
+
+  // Instead of calling createCheckoutSession directly,
+  // redirect to a page that will handle the checkout
+  if (plan === "pro") {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      redirect("/");
+    }
+
+    const { data: userMetadata, error: metadataError } = await supabase
+      .from("user_metadata")
+      .select("plan_type")
+      .eq("user_id", user.id)
+      .single();
+
+    if (metadataError) {
+      console.error("Error fetching user metadata:", metadataError);
+      redirect("/");
+    }
+
+    if (userMetadata?.plan_type === "pro") {
+      // User already has pro plan, redirect to home
+      redirect("/");
+    }
+
+    redirect("/checkout");
+  }
+
   redirect("/");
 }
