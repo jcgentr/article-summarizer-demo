@@ -18,12 +18,12 @@ export default function PrivacyPolicy() {
         Gistr (referred to as &quot;we,&quot; &quot;our,&quot; or
         &quot;us&quot;) operates the web application at{" "}
         <a
-          href="https://getgistr.com"
+          href="https://app.getgistr.com"
           target="_blank"
           rel="noopener noreferrer"
           className="hover:underline"
         >
-          https://getgistr.com
+          https://app.getgistr.com
         </a>
         (&quot;Website&quot;) and the Gistr Chrome Extension
         (&quot;Extension&quot;). This Privacy Policy explains how we collect,

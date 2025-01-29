@@ -2,7 +2,7 @@
 
 **Effective Date:** January 10, 2025
 
-Gistr (referred to as "we," "our," or "us") operates the web application at https://getgistr.com ("Website") and the Gistr Chrome Extension ("Extension"). This Privacy Policy explains how we collect, use, and safeguard your data when you use our services.
+Gistr (referred to as "we," "our," or "us") operates the web application at https://app.getgistr.com ("Website") and the Gistr Chrome Extension ("Extension"). This Privacy Policy explains how we collect, use, and safeguard your data when you use our services.
 
 ## 1. Information We Collect
 
