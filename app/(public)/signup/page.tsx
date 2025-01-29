@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState } from "react";
+import { Suspense, useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { Loader2, UserPlus } from "lucide-react";
 
@@ -57,7 +57,7 @@ function PasswordInput() {
   );
 }
 
-export default function SignupPage() {
+function Signup() {
   const searchParams = useSearchParams();
   const plan = searchParams.get("plan");
   const [state, formAction] = useActionState(signup, initialState);
@@ -103,5 +103,43 @@ export default function SignupPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+function SignupSkeleton() {
+  return (
+    <div>
+      <div className="space-y-8">
+        <div className="space-y-2">
+          <div className="h-8 w-32 bg-muted animate-pulse rounded" />
+          <div className="h-4 w-64 bg-muted animate-pulse rounded" />
+        </div>
+        {/* Hidden plan input - no need for skeleton */}
+        <div className="space-y-2">
+          <div className="h-4 w-12 bg-muted animate-pulse rounded" />
+          <div className="h-10 w-full bg-muted animate-pulse rounded" />
+        </div>
+        <div className="space-y-2">
+          <div className="h-4 w-16 bg-muted animate-pulse rounded" />
+          <div className="h-10 w-full bg-muted animate-pulse rounded" />
+        </div>
+        <div className="flex space-x-2 justify-between">
+          <div className="h-10 w-full bg-muted animate-pulse rounded" />
+        </div>
+      </div>
+      {/* Error message space */}
+      <div className="mt-4 h-6" />
+      <div className="mt-6 text-center">
+        <div className="h-4 w-52 bg-muted animate-pulse rounded mx-auto" />
+      </div>
+    </div>
+  );
+}
+
+export default function SignupPage() {
+  return (
+    <Suspense fallback={<SignupSkeleton />}>
+      <Signup />
+    </Suspense>
   );
 }

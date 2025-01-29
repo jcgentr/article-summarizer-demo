@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { Suspense, useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { Loader2, LogIn } from "lucide-react";
 
@@ -57,7 +57,7 @@ function PasswordInput() {
   );
 }
 
-export default function LoginPage() {
+function Login() {
   const searchParams = useSearchParams();
   const plan = searchParams.get("plan");
   const [state, formAction] = useActionState(login, initialState);
@@ -103,5 +103,40 @@ export default function LoginPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+function LoginSkeleton() {
+  return (
+    <div>
+      <div className="space-y-8">
+        <div className="space-y-2">
+          <div className="h-8 w-32 bg-muted animate-pulse rounded" />
+          <div className="h-4 w-64 bg-muted animate-pulse rounded" />
+        </div>
+        <div className="space-y-2">
+          <div className="h-4 w-12 bg-muted animate-pulse rounded" />
+          <div className="h-10 w-full bg-muted animate-pulse rounded" />
+        </div>
+        <div className="space-y-2">
+          <div className="h-4 w-16 bg-muted animate-pulse rounded" />
+          <div className="h-10 w-full bg-muted animate-pulse rounded" />
+        </div>
+        <div className="flex space-x-2 justify-between">
+          <div className="h-10 w-full bg-muted animate-pulse rounded" />
+        </div>
+      </div>
+      <div className="mt-6 text-center">
+        <div className="h-4 w-48 bg-muted animate-pulse rounded mx-auto" />
+      </div>
+    </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<LoginSkeleton />}>
+      <Login />
+    </Suspense>
   );
 }
