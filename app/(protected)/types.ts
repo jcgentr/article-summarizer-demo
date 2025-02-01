@@ -18,7 +18,6 @@ export interface Article {
 export interface UserMetadata {
   user_id: string;
   plan_type: PlanType;
-  stripe_customer_id: string | null;
   summaries_generated: number;
   billing_cycle_start: string;
   created_at: string;

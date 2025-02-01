@@ -1,4 +1,4 @@
-# Gistr
+# Gistr (Demo Version)
 
 A fullstack web application that automatically summarizes and saves web articles. Built with Next.js, Supabase, and AI.
 
@@ -34,5 +34,3 @@ The app uses two main tables:
 
 - `articles`: Stores article content, summaries, and metadata
 - `user_articles`: Tracks user-specific data like read status and ratings
-
-See `TODO.md` for planned features and roadmap.

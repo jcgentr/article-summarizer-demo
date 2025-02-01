@@ -37,26 +37,37 @@ export async function updateSession(request: NextRequest) {
   // IMPORTANT: DO NOT REMOVE auth.getUser()
 
   const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    data: { session },
+  } = await supabase.auth.getSession();
 
-  const publicPaths = [
-    "/login",
-    "/auth",
-    "/signup",
-    "/error",
-    "/privacy-policy",
-  ];
+  console.log(session);
+
+  const publicPaths = ["/error"];
   const isPublicPath = publicPaths.some((path) =>
     request.nextUrl.pathname.startsWith(path)
   );
 
-  if (!user && !isPublicPath) {
-    // no user, potentially respond by redirecting the user to the login page
-    const url = request.nextUrl.clone();
-    url.pathname = "/login";
-    console.log("redirecting to login page");
-    return NextResponse.redirect(url);
+  // Only attempt anonymous sign-in if there's no session and we haven't tried before
+  if (
+    !session &&
+    !isPublicPath &&
+    !request.cookies.has("anonymous_auth_attempted")
+  ) {
+    const { error } = await supabase.auth.signInAnonymously();
+
+    if (error) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/error";
+      return NextResponse.redirect(url);
+    }
+
+    // Set a cookie to prevent further attempts
+    supabaseResponse.cookies.set("anonymous_auth_attempted", "true", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 30, // 30 days
+    });
   }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is.

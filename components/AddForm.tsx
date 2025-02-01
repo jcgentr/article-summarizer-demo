@@ -2,14 +2,12 @@
 
 import { useActionState, useEffect } from "react";
 import { useFormStatus } from "react-dom";
-import {
-  createArticleSummary,
-  createCheckoutSession,
-} from "../app/(protected)/actions";
+import { createArticleSummary } from "../app/(protected)/actions";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import Link from "next/link";
 
 const initialState = {
   message: "",
@@ -60,15 +58,15 @@ export function AddForm() {
       if (state.message.startsWith("Failed")) {
         toast.error(state.message);
       } else if (state.message.startsWith("You've")) {
-        if (state.message.includes("free")) {
+        if (state.message.includes("demo")) {
           toast.warning(state.message, {
             description: (
-              <button
-                onClick={() => createCheckoutSession()}
+              <Link
+                href="https://app.getgistr.com/"
                 className="font-medium underline hover:no-underline"
               >
-                Please upgrade to Pro for more summaries.
-              </button>
+                Please try the main app for more summaries.
+              </Link>
             ),
           });
         } else {

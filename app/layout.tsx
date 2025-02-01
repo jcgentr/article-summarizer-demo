@@ -17,7 +17,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: `Gistr${process.env.NODE_ENV === "development" ? " | Dev" : ""}`,
+  title: `Gistr Demo${process.env.NODE_ENV === "development" ? " | Dev" : ""}`,
   description: "Summarize web articles",
 };
 

@@ -2,8 +2,8 @@ import { BillingCycleInfo } from "@/app/(protected)/types";
 
 // summaries per month
 export const SUMMARY_LIMITS = {
-  free: 15,
-  pro: 100,
+  free: 5,
+  pro: 0,
 } as const;
 
 export function shouldResetBillingCycle(

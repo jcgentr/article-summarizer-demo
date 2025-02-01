@@ -6,10 +6,8 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/utils/supabase/server";
 import { generateSummaryAndTags } from "@/lib/ai";
 import { redirect } from "next/navigation";
-import { shouldResetBillingCycle, SUMMARY_LIMITS } from "@/lib/billing";
+import { SUMMARY_LIMITS } from "@/lib/billing";
 import { PlanType } from "./types";
-import { stripe } from "@/lib/stripe";
-import config from "../config";
 
 export async function createArticleSummary(
   prevState: {
@@ -78,27 +76,6 @@ export async function createArticleSummary(
       );
     }
 
-    // Check if billing cycle needs reset (monthly)
-    const now = new Date();
-    const cycleStart = new Date(userMetadata.billing_cycle_start);
-    const { shouldReset, nextBillingDate } = shouldResetBillingCycle(
-      cycleStart,
-      now
-    );
-
-    if (shouldReset && nextBillingDate) {
-      // Reset cycle
-      await supabase
-        .from("user_metadata")
-        .update({
-          summaries_generated: 0,
-          billing_cycle_start: nextBillingDate.toISOString(),
-        })
-        .eq("user_id", user.id);
-
-      userMetadata.summaries_generated = 0;
-    }
-
     const limit =
       SUMMARY_LIMITS[userMetadata.plan_type as PlanType] ?? SUMMARY_LIMITS.free;
 
@@ -106,7 +83,7 @@ export async function createArticleSummary(
       return {
         message:
           userMetadata.plan_type === "free"
-            ? "You've reached your free plan limit."
+            ? "You've reached your demo plan limit."
             : "You've reached your monthly summary limit.",
       };
     }
@@ -272,77 +249,4 @@ export async function logout() {
 
   revalidatePath("/");
   redirect("/login");
-}
-
-export async function createCheckoutSession() {
-  try {
-    const supabase = await createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      throw new Error("User must be logged in to update read status");
-    }
-
-    const session = await stripe.checkout.sessions.create({
-      billing_address_collection: "auto",
-      line_items: [
-        {
-          price: config.stripePriceId, // Your price ID from Stripe dashboard
-          quantity: 1,
-        },
-      ],
-      mode: "subscription",
-      customer_email: user.email, // Automatically creates or links the customer
-      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/account?success=true&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/account?canceled=true`,
-      // automatic_tax: { enabled: true },
-    });
-
-    if (!session.url) {
-      throw new Error("Failed to create checkout session");
-    }
-
-    redirect(session.url);
-  } catch (error) {
-    console.error("Error creating checkout session:", error);
-    throw error;
-  }
-}
-
-export async function createPortalSession() {
-  try {
-    const supabase = await createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      throw new Error("User must be logged in to access billing portal");
-    }
-
-    // Get user's Stripe customer ID
-    const { data: userData, error: userError } = await supabase
-      .from("user_metadata")
-      .select("stripe_customer_id")
-      .eq("user_id", user.id)
-      .single();
-
-    if (userError || !userData?.stripe_customer_id) {
-      throw new Error("No Stripe customer found for user");
-    }
-
-    const returnUrl = process.env.NEXT_PUBLIC_APP_URL;
-
-    const portalSession = await stripe.billingPortal.sessions.create({
-      customer: userData.stripe_customer_id,
-      return_url: returnUrl,
-    });
-
-    redirect(portalSession.url);
-  } catch (error) {
-    console.error("Error creating portal session:", error);
-    throw error;
-  }
 }

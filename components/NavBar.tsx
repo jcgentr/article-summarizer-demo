@@ -10,18 +10,17 @@ import { PlanType, UserMetadata } from "@/app/(protected)/types";
 
 const DEFAULT_USER_METADATA: Pick<
   UserMetadata,
-  "plan_type" | "summaries_generated" | "stripe_customer_id"
+  "plan_type" | "summaries_generated"
 > = {
   plan_type: "free",
   summaries_generated: 0,
-  stripe_customer_id: null,
 } as const;
 
 export default async function NavBar({ user }: { user: User }) {
   const supabase = await createClient();
   const { data: userMetadata } = await supabase
     .from("user_metadata")
-    .select("plan_type, summaries_generated, stripe_customer_id")
+    .select("plan_type, summaries_generated")
     .eq("user_id", user.id)
     .single();
 
@@ -44,8 +43,6 @@ export default async function NavBar({ user }: { user: User }) {
         </Link>
         <div className="flex gap-4">
           <NavUser
-            email={user.email || ""}
-            stripeCustomerId={metadata.stripe_customer_id}
             planType={metadata.plan_type}
             summariesGenerated={metadata.summaries_generated}
             summaryLimit={SUMMARY_LIMITS[metadata.plan_type as PlanType]}
