@@ -6,6 +6,7 @@ export interface Article {
   summary: string;
   tags: string | null;
   author: string | null;
+  published_time: string | null;
   title: string;
   word_count: number;
   read_time: number;
@@ -13,6 +14,7 @@ export interface Article {
   rating: number | null;
   created_at: string;
   updated_at: string;
+  formatted_content: string | null;
 }
 
 export interface UserMetadata {
